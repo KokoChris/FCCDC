@@ -43,11 +43,10 @@ function GenerateDungeon(size, width, height) {
         }
     })).sort((alpha, beta) => {
         return dist(alpha.x, alpha.y) - dist(beta.x, beta.y)
-    });
-
-     /*for (let i = 1; i < dungeon.length ; i++)
+    })
+    console.log(dungeon);
+    /*for (let i = 1; i < dungeon.length; i++)
         dungeon[i] = moveAway(dungeon[i], dungeon[i - 1]).y;*/
-
 
     return dungeon;
 
@@ -58,7 +57,6 @@ function DrawRoom(room) {
     return Path().moveto(x, y).hlineto(x + width).vlineto(y + width).hlineto(x).closepath();
 
 }
-
 
 class Hello extends React.Component {
     render() {
