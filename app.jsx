@@ -45,11 +45,10 @@ function GenerateDungeon(size, width, height) {
         return dist(alpha.x, alpha.y) - dist(beta.x, beta.y)
     });
 
-//for (let j = 1; j < dungeon.length; i++) {
-    for (let i = 1; i < j; i++)
-        dungeon[i] = moveAway(dungeon[i], dungeon[i - 1]).y);
+     /*for (let i = 1; i < dungeon.length ; i++)
+        dungeon[i] = moveAway(dungeon[i], dungeon[i - 1]).y;*/
 
- }
+
     return dungeon;
 
 };
