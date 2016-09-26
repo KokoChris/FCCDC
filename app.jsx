@@ -14,9 +14,12 @@ function moveAway(beta, alpha) {
     let newBeta = beta;
     if ((dify <= 0) && (difx <= 0))
         if (difx > dify)
-            newBeta.x = beta.x - difx;
+            newBeta.x = beta.x - difx ;
         else
-            newBeta.y = beta.y - dify;
+            newBeta.y = beta.y - dify ;
+
+
+    console.log(difx, dify , beta.x, beta.y)        
 
     return newBeta;
 
@@ -45,8 +48,9 @@ function GenerateDungeon(size, width, height) {
         return dist(alpha.x, alpha.y) - dist(beta.x, beta.y)
     })
     console.log(dungeon);
-    /*for (let i = 1; i < dungeon.length; i++)
-        dungeon[i] = moveAway(dungeon[i], dungeon[i - 1]).y;*/
+    for (let j = 1; j < dungeon.length; j++)
+        for (let i = 0; i < j; i++)
+            dungeon[j] = (moveAway(dungeon[j], dungeon[i]));
 
     return dungeon;
 
@@ -60,7 +64,7 @@ function DrawRoom(room) {
 
 class Hello extends React.Component {
     render() {
-        let dungeon = GenerateDungeon(15, 2000, 1000);
+        let dungeon = GenerateDungeon(30, 2000, 1000);
         let rooms = dungeon.map(x => DrawRoom(x));
 
         return (
