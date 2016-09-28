@@ -9,14 +9,14 @@ function dist(x, y) {
     return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 }
 function moveAway(beta, alpha) {
-    const dify = beta.y - alpha.y - alpha.height;
-    const difx = beta.x - alpha.x - alpha.width;
+    const dify = beta.y - alpha.y - alpha.height
+    const difx = beta.x - alpha.x - alpha.width
     let newBeta = beta;
     if ((dify <= 0) && (difx <= 0))
         if (difx > dify)
-            newBeta.x = beta.x - difx ;
+            newBeta.x = beta.x - difx + _.random(10,30);
         else
-            newBeta.y = beta.y - dify ;
+            newBeta.y = beta.y - dify + _.random(10,30);
 
 
     console.log(difx, dify , beta.x, beta.y)
@@ -64,7 +64,7 @@ function DrawRoom(room) {
 
 class Hello extends React.Component {
     render() {
-        let dungeon = GenerateDungeon(30, 2000, 1000);
+        let dungeon = GenerateDungeon(300, 2000, 1000);
         let rooms = dungeon.map(x => DrawRoom(x));
 
         return (
