@@ -21,12 +21,11 @@ function moveAway(beta, alpha) {
         sign.y = ((beta.y < 0) || (alpha.y < 0))
             ? (-1)
             : 1;
-        console.log(sign.x, sign.y)
 
         if (difx > dify)
             newBeta.x = sign.x * ((newBeta.x * sign.x) - difx + _.random(10, 30));
         else
-            newBeta.y = sign.y * ((newBeta.y * sign) - dify + _.random(10, 30));
+            newBeta.y = sign.y * ((newBeta.y * sign.y) - dify + _.random(10, 30));
 
         }
     if (isNaN(newBeta.x))
@@ -69,7 +68,9 @@ console.log(NaNarray);
 };
 
 function DrawRoom(room) {
-    const {x, y, width, height} = room;
+    let  {x, y, width, height} = room;
+ 
+
     return Path().moveto(x, y).hlineto(x + width).vlineto(y + height).hlineto(x).closepath();
 
 }
