@@ -4,24 +4,37 @@ import ReactDOM from 'react-dom';
 import _ from 'lodash';
 const width = 1000,
     height = 500;
-
+let NaNarray = [];
 function dist(x, y) {
     return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 }
 function moveAway(beta, alpha) {
-    const dify = beta.y - alpha.y - alpha.height;
-    const difx = beta.x - alpha.x - alpha.width;
+
+    const dify = beta.y - alpha.y - alpha.height
+    const difx = beta.x - alpha.x - alpha.width
     let newBeta = beta;
-    if ((dify <= 0) && (difx <= 0))
+    let sign = {};
+    if ((dify <= 0) && (difx <= 0)) {
+        sign.x = ((beta.x < 0) || (alpha.x < 0))
+            ? (-1)
+            : 1;
+        sign.y = ((beta.y < 0) || (alpha.y < 0))
+            ? (-1)
+            : 1;
+        console.log(sign.x, sign.y)
+
         if (difx > dify)
-            newBeta.x = beta.x - difx +10;
+            newBeta.x = sign.x * ((newBeta.x * sign.x) - difx + _.random(10, 30));
         else
-            newBeta.y = beta.y - dify +10 ;
+            newBeta.y = sign.y * ((newBeta.y * sign) - dify + _.random(10, 30));
 
-
+        }
+    if (isNaN(newBeta.x))
+        NaNarray.push(newBeta)
+    else if (isNaN(newBeta.y))
+        NaNarray.push(newBeta)
 
     return newBeta;
-
 }
 
 function GenerateDungeon(size, width, height) {
@@ -31,8 +44,8 @@ function GenerateDungeon(size, width, height) {
         y: height / (15 * 3)
     };
     const maxDim = {
-        x: width / 10,
-        y: height / 10
+        x: width / 5,
+        y: height / 5
     };
     let IsDisjoint = false;
 
@@ -46,12 +59,11 @@ function GenerateDungeon(size, width, height) {
     })).sort((alpha, beta) => {
         return dist(alpha.x, alpha.y) - dist(beta.x, beta.y)
     })
-     for (let j = 1; j < dungeon.length; j++)
+    //console.log(dungeon);
+    for (let j = 1; j < dungeon.length; j++)
         for (let i = 0; i < j; i++)
             dungeon[j] = (moveAway(dungeon[j], dungeon[i]));
-
-
-
+console.log(NaNarray);
     return dungeon;
 
 };
@@ -64,7 +76,7 @@ function DrawRoom(room) {
 
 class Hello extends React.Component {
     render() {
-        let dungeon = GenerateDungeon(30, 2000, 1000);
+        let dungeon = GenerateDungeon(300, 2000, 1000);
         let rooms = dungeon.map(x => DrawRoom(x));
 
         return (
