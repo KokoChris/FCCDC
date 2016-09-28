@@ -91,39 +91,7 @@ class Hello extends React.Component {
     }
 };
 
-/*
-function GenerateRoom(center, dim, exits) {
-    const {width, height} = dim;
-    const {cx, cy} = center;
-    let exitArr = []
-
-    let GenExits = () => switch (_.random(0, 3)) {
-        case 0:
-            return {
-                x: cx,
-                y: cy - _.random(0.1, height / 2)
-            };
-        case 1:
-            return {
-                x: cx + _.random(0.1, width / 2),
-                y: cy
-            }
-        case 2:
-            return {
-                x: cx,
-                y: cy + _.random(0.1, height / 2)
-            };
-        case 3:
-            return {
-                x: cx - _.random(0.1, width / 2),
-                y: cy
-            }
-
-    }
-    return (_.times(arrayLength, _.constant(null))).map(x => GenExits());
-
-}
-*/
+ 
 
 ReactDOM.render(
     <Hello/>, document.getElementById('App'));
