@@ -19,7 +19,7 @@ function moveAway(beta, alpha) {
             newBeta.y = beta.y - dify ;
 
 
-    console.log(difx, dify , beta.x, beta.y)        
+    console.log(difx, dify , beta.x, beta.y)
 
     return newBeta;
 
@@ -58,7 +58,7 @@ function GenerateDungeon(size, width, height) {
 
 function DrawRoom(room) {
     const {x, y, width, height} = room;
-    return Path().moveto(x, y).hlineto(x + width).vlineto(y + width).hlineto(x).closepath();
+    return Path().moveto(x, y).hlineto(x + width).vlineto(y + height).hlineto(x).closepath();
 
 }
 
