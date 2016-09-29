@@ -11,6 +11,53 @@ const grid = {
 function dist(x, y) {
     return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 }
+function Spread(beta, alpha) {
+
+    const dify = Math.abs(beta.y) - Math.abs(alpha.y) - alpha.height;
+    const difx = Math.abs(beta.x) - Math.abs(alpha.x) - alpha.width;
+    let newBeta = beta;
+    let sign = {};
+    if ((dify <= 0) && (difx <= 0)) {
+        sign.x = ((beta.x < 0) || (alpha.x < 0))
+            ? (-1)
+            : 1;
+        sign.y = ((beta.y < 0) || (alpha.y < 0))
+            ? (-1)
+            : 1;
+
+        if (difx > dify)
+            newBeta.x = sign.x * (beta.x * sign.x - difx + _.random(10, 30));
+        else
+            newBeta.y = sign.y * (beta.y * sign.y - dify + _.random(10, 30));
+
+        }
+
+    return newBeta;
+    return beta;
+}
+
+function RadialSpread(beta, alpha) {
+    const dify = Math.abs(beta.y) - Math.abs(alpha.y) - alpha.height;
+    const difx = Math.abs(beta.x) - Math.abs(alpha.x) - alpha.width;
+    let newRoom = beta;
+
+    if ((dify <= 0) && (difx <= 0)) {
+
+        /// Radial coordinates
+        const betaPhi = Math.atan2(beta.y, beta.x);
+        const betaRadius = Math.sqrt(beta.x * beta.x + beta.y * beta.y);
+        //const alphaPhi = Math.atan2(alpha.y, alpha.x);
+        //const alphaRadius = Math.sqrt(alpha.x * alpha.x + alpha.y * alpha.y);
+        const alphaDiameter = Math.sqrt(alpha.x * alpha.x + alpha.y * alpha.y);
+
+        newRoom.x = (betaRadius + alphaDiameter) * Math.cos(betaPhi);
+        newRoom.y = (betaRadius + alphaDiameter) * Math.sin(betaPhi);
+
+    }
+    return newRoom
+
+}
+
 function GenerateDungeon(size, width, height) {
 
     let dungeon = [];
@@ -29,13 +76,13 @@ function GenerateDungeon(size, width, height) {
 
     let SpawnRoom = () => {
 
-        const w = _.random(grid.width * 0.5, 1.25 * grid.width);
-        const h = _.random(0.5 * grid.height, 1.25 * grid.height);
+        const w = _.random(-1 * grid.width, (3 / 2) * grid.width);
+        const h = _.random(-1 * grid.height, (3 / 2) * grid.height);
 
         const room = {
 
-            x: w,
-            y: h,
+            x: (w - Math.floor(width / 2)),
+            y: (h - Math.floor(height / 2)),
             width: Math.floor(_.random(minDim.x, maxDim.x, true)),
             height: Math.floor(_.random(minDim.y, maxDim.y, true))
         }
@@ -64,6 +111,7 @@ function GenerateDungeon(size, width, height) {
         return false;
     }
     dungeon.push(SpawnRoom());
+    //    console.log(dungeon);
 
     for (let i = 0; i < 50; i++) {
         room = SpawnRoom();
@@ -86,7 +134,7 @@ function GenerateDungeon(size, width, height) {
 function DrawRoom(room) {
     let {x, y, width, height} = room;
     (room.x, room.y, room.width, room.height);
-    return Path().moveto(x, y).hlineto(x + width).vlineto(y + height).hlineto(x).closepath();
+    return Path().moveto(x, y).hlineto(x + width).vlineto(-1*y -1*height).hlineto(x).closepath();
 
 }
 
@@ -98,7 +146,7 @@ class Hello extends React.Component {
         });
 
         return (
-            <svg width={grid.width} height={grid.height} viewBox={"0 0 2000 1000"} preserveAspectRatio={"none"} style={{
+            <svg width={grid.width} height={grid.height} viewBox={"-1000 -500 2000 1000"} preserveAspectRatio={"none"} style={{
                 background: "white"
             }}>
 
