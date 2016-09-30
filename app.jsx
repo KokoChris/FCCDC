@@ -84,7 +84,7 @@ function PopulateDungeon(width, minWidth, maxWidth, height, minHeigh, maxHeigh) 
         for (let j = 1; j < yPartion.length ; j++) {
             GridPartition.push({
                 x: xPartion[i],
-                y: yPartion[j],
+                y: yPartion[j-1],
                 width: xPartion[i + 1] - xPartion[i],
                 height: yPartion[j] - yPartion[j-1]
             })
@@ -93,7 +93,7 @@ function PopulateDungeon(width, minWidth, maxWidth, height, minHeigh, maxHeigh) 
     return GridPartition;
 }
 
-let tmp = PopulateDungeon(3000, 100, 200, 5000, 200, 400);
+let tmp = PopulateDungeon(2000, 100, 500, 1000, 100, 400);
 console.log(tmp);
 
 
@@ -189,7 +189,7 @@ class Hello extends React.Component {
 
         return (
             <svg width={grid.width} height={grid.height} viewBox={"0 0 2000 1000"} preserveAspectRatio={"none"} style={{
-                background: "white"
+                background: "#FFF8C6"
             }}>
 
                 {rooms.map((x, index) => <g key={"room No: " + index}>
