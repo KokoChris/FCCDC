@@ -4,12 +4,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
 
+const grid = {
+    width: 1000,
+    height: 500
+};
+
 function IntervalPartition(dim, mindim) {
     const {left, right} = dim;
     const {min, max} = mindim;
     let Bound = false;
     let partition = [left, right];
-    console.log[partition]
     let tmpArray = [];
     let counter = 100
 
@@ -77,28 +81,26 @@ function PopulateDungeon(width, minWidth, maxWidth, height, minHeigh, maxHeigh) 
     let GridPartition = [];
 
     for (let i = 0; i < xPartion.length - 1; i++)
-        for (let j = 0; j < yPartion.length - 1; j++) {
+        for (let j = 1; j < yPartion.length ; j++) {
             GridPartition.push({
                 x: xPartion[i],
                 y: yPartion[j],
-                width: xPartion[i + i] - xPartion[i],
-                height: yPartion[j + 1] - yPartion[j]
+                width: xPartion[i + 1] - xPartion[i],
+                height: yPartion[j] - yPartion[j-1]
             })
         }
 
     return GridPartition;
 }
 
-const grid = {
-    width: 1000,
-    height: 500
-};
+let tmp = PopulateDungeon(3000, 100, 200, 5000, 200, 400);
+console.log(tmp);
+
 
 function dist(x, y) {
     return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 }
 
-console.log(skata);
 function GenerateDungeon(size, width, height) {
 
     let dungeon = [];
@@ -181,7 +183,7 @@ function DrawRoom(room) {
 class Hello extends React.Component {
     render() {
         let dungeon = GenerateDungeon(100, 800, 400);
-        let rooms = dungeon.map(alpha => {
+        let rooms = tmp.map(alpha => {
             return DrawRoom(alpha)
         });
 
