@@ -19,8 +19,7 @@ function IntervalPartition(dim, mindim) {
 
     while ((!Bound) && (counter > 0)) {
         counter--;
-        console.log(partition);
-        Bound = true;
+         Bound = true;
         for (let i = 0; i < partition.length - 1; i++) {
             if (partition[i + 1] - partition[i] > max) {
                 Bound = false;
@@ -81,21 +80,20 @@ function PopulateDungeon(width, minWidth, maxWidth, height, minHeigh, maxHeigh) 
     let GridPartition = [];
 
     for (let i = 0; i < xPartion.length - 1; i++)
-        for (let j = 1; j < yPartion.length ; j++) {
+        for (let j = 1; j < yPartion.length; j++) {
             GridPartition.push({
                 x: xPartion[i],
-                y: yPartion[j-1],
+                y: yPartion[j - 1],
                 width: xPartion[i + 1] - xPartion[i],
-                height: yPartion[j] - yPartion[j-1]
+                height: yPartion[j] - yPartion[j - 1]
             })
         }
 
     return GridPartition;
 }
 
-let tmp = PopulateDungeon(2000, 100, 500, 1000, 100, 400);
+let tmp = (PopulateDungeon(2000, 150, 800, 1000, 100, 400));
 console.log(tmp);
-
 
 function dist(x, y) {
     return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
@@ -151,6 +149,22 @@ function GenerateDungeon(size, width, height) {
             if ((y2 <= y1) && (y1 <= y2 + h2))
                 return true;
 
+        if ((x1 < x2) && (x2 < x1 + w1))
+            if ((y2 < y1) && (y1 + h1 < y2 + h2))
+                return true;
+
+        if ((x2 < x1) && (x1 < x2 + w2))
+            if ((y1 < y2) && (y2 + h2 < y1 + h1))
+                return true;
+
+        if ((x1 < x2) && (x2 + w2 < x1 + w1))
+            if ((y2 < y1) && (y1 < y2 + h2))
+                return true;
+
+        if ((x2 < x1) && (x1 + w1 < x2 + w2))
+            if ((y1 < y2) && (y2 < y1 + h1))
+                return true;
+
         return false;
     }
     dungeon.push(SpawnRoom());
@@ -180,10 +194,22 @@ function DrawRoom(room) {
 
 }
 
+let Trooms = PopulateDungeon(2000, 150, 800, 1000, 100, 400); // GenerateDungeon(100, 2000, 1000);
+
+let Tdungeon = []
+
+for(let i=0;i< 8;i++)
+ Tdungeon = _.concat(Tdungeon,Trooms.splice( _.random(0, Trooms.length - 1), 1));
+
+let DrawnDungeon = Tdungeon.map(x=>DrawRoom(x));
+
+ //DrawRoom(room[0]);
+
+
 class Hello extends React.Component {
     render() {
-        let dungeon = GenerateDungeon(100, 800, 400);
-        let rooms = tmp.map(alpha => {
+        let dungeon = GenerateDungeon(100, 2000, 400);
+        let rooms = Tdungeon.map(alpha => {
             return DrawRoom(alpha)
         });
 
@@ -192,7 +218,7 @@ class Hello extends React.Component {
                 background: "#FFF8C6"
             }}>
 
-                {rooms.map((x, index) => <g key={"room No: " + index}>
+                {DrawnDungeon.map((x, index) => <g key={"room No: " + index}>
                     <path d={x.print()} fill="none" stroke="blue"/>
                 </g>)}
             </svg>
