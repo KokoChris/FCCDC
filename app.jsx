@@ -198,7 +198,7 @@ let Trooms = PopulateDungeon(2000, 150, 800, 1000, 100, 400); // GenerateDungeon
 
 let Tdungeon = []
 
-for(let i=0;i< 8;i++)
+for(let i=0;i< 10;i++)
  Tdungeon = _.concat(Tdungeon,Trooms.splice( _.random(0, Trooms.length - 1), 1));
 
 let DrawnDungeon = Tdungeon.map(x=>DrawRoom(x));
