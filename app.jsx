@@ -3,6 +3,92 @@ import Path from './node_modules/paths-js/path.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
+
+function IntervalPartition(dim, mindim) {
+    const {left, right} = dim;
+    const {min, max} = mindim;
+    let Bound = false;
+    let partition = [left, right];
+    console.log[partition]
+    let tmpArray = [];
+    let counter = 100
+
+    while ((!Bound) && (counter > 0)) {
+        counter--;
+        console.log(partition);
+        Bound = true;
+        for (let i = 0; i < partition.length - 1; i++) {
+            if (partition[i + 1] - partition[i] > max) {
+                Bound = false;
+                let point;
+                for (let j = 0; j < 100; j++) {
+                    point = _.random(partition[i], partition[i + 1], false)
+
+                    if ((point - partition[i] >= min) && (partition[i + 1] - point >= min)) {
+                        break;
+                    } else {
+                        point = null;
+                    }
+                }
+                if (point != null)
+                    tmpArray.push(Math.floor(point));
+                }
+            else if (partition[i + 1] - partition[1] > 3 * min) {
+                let point;
+                for (let j = 0; j < 100; j++) {
+                    point = _.random(partition[i], partition[i + 1], false)
+                    if ((point - partition[i] >= min) && (partition[i + 1] - point >= min))
+                        break;
+                    else
+                        point = null;
+
+                    }
+                if (point != null)
+                    tmpArray.push(Math.floor(point));
+                }
+            }
+        partition = (_.concat(partition, tmpArray)).sort((a, b) => a - b);;
+        tmpArray = [];
+
+    }
+
+    return partition;
+
+}
+
+function PopulateDungeon(width, minWidth, maxWidth, height, minHeigh, maxHeigh) {
+    let xPartion = IntervalPartition({
+        left: 0,
+        right: width
+    }, {
+        min: minWidth,
+        max: maxWidth
+
+    });
+
+    let yPartion = IntervalPartition({
+        left: 0,
+        right: height
+    }, {
+        min: minHeigh,
+        max: maxHeigh
+    });
+
+    let GridPartition = [];
+
+    for (let i = 0; i < xPartion.length - 1; i++)
+        for (let j = 0; j < yPartion.length - 1; j++) {
+            GridPartition.push({
+                x: xPartion[i],
+                y: yPartion[j],
+                width: xPartion[i + i] - xPartion[i],
+                height: yPartion[j + 1] - yPartion[j]
+            })
+        }
+
+    return GridPartition;
+}
+
 const grid = {
     width: 1000,
     height: 500
@@ -11,6 +97,8 @@ const grid = {
 function dist(x, y) {
     return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 }
+
+console.log(skata);
 function GenerateDungeon(size, width, height) {
 
     let dungeon = [];

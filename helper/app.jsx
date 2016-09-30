@@ -137,26 +137,3 @@ function DrawRoom(room) {
     return Path().moveto(x, y).hlineto(x + width).vlineto(-1*y -1*height).hlineto(x).closepath();
 
 }
-
-class Hello extends React.Component {
-    render() {
-        let dungeon = GenerateDungeon(100, 800, 400);
-        let rooms = dungeon.map(alpha => {
-            return DrawRoom(alpha)
-        });
-
-        return (
-            <svg width={grid.width} height={grid.height} viewBox={"-1000 -500 2000 1000"} preserveAspectRatio={"none"} style={{
-                background: "white"
-            }}>
-
-                {rooms.map((x, index) => <g key={"room No: " + index}>
-                    <path d={x.print()} fill="none" stroke="blue"/>
-                </g>)}
-            </svg>
-        )
-    }
-};
-
-ReactDOM.render(
-    <Hello/>, document.getElementById('App'));
