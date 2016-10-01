@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
 import {PopulateDungeon, PopulateDungeon2} from './helper.jsx';
+import {TriangulateDungeon, GetDungeonPaths} from './helper1.jsx'
 
 const grid = {
     width: 1500,
@@ -35,8 +36,15 @@ let dungeon = RandomChoose(rooms, 10)
 
 let DrawnDungeon = dungeon.map(x => DrawRoom(x));
 
-let tmp = (PopulateDungeon2(2000, 1000, 6, 3)).map(alpha => DrawRoom(alpha));
-let secondDungeon = RandomChoose(tmp, 10);
+let tmp = (PopulateDungeon2(2000, 1000, 6, 3))
+
+let RoomArray = RandomChoose(tmp, 10);
+
+let secondDungeon = RoomArray.map(alpha => DrawRoom(alpha));
+
+let pathsArray = GetDungeonPaths(RoomArray);
+
+let paths = pathsArray.map(arr => Path().moveto(arr[0][0], arr[0][1]).lineto(arr[1][0], arr[1][1]))
 
 class Hello extends React.Component {
     render() {
@@ -47,6 +55,9 @@ class Hello extends React.Component {
             }}>
 
                 {secondDungeon.map((x, index) => <g key={"room No: " + index}>
+                    <path d={x.print()} fill="none" stroke="blue"/>
+                </g>)}
+                {paths.map((x, index) => <g key={"path: " + index}>
                     <path d={x.print()} fill="none" stroke="blue"/>
                 </g>)}
             </svg>
