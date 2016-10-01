@@ -1,7 +1,5 @@
 import _ from 'lodash';
 
-
-
 function dist(x, y) {
     return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 }
@@ -56,6 +54,28 @@ function IntervalPartition(dim, mindim) {
 
 }
 
+function EqualGridPartition(dim, pointNum) {
+    const {up, right} = dim;
+    const {xNum, yNum} = pointNum;
+    let yInterval = up / yNum;
+    let xInterval = right / xNum;
+    let Grid = [];
+
+    for (let i = 0; i < xNum; i++)
+        for (let j = 0; j < yNum; j++)
+            Grid.push({
+                x: (i * xInterval),
+                y: (j * yInterval),
+                width: xInterval,
+                height: yInterval
+            })
+
+
+
+    return Grid;
+
+}
+
 function PopulateDungeon(width, minWidth, maxWidth, height, minHeigh, maxHeigh) {
     let xPartion = IntervalPartition({
         left: 0,
@@ -89,5 +109,31 @@ function PopulateDungeon(width, minWidth, maxWidth, height, minHeigh, maxHeigh) 
     return GridPartition;
 }
 
+function PopulateDungeon2(width, height, xNum, yNum) {
 
-export default  PopulateDungeon;
+    const dim = {
+            up: height,
+            right: width
+        },
+        pointNum = {
+            xNum: xNum,
+            yNum: yNum
+        };
+    let rooms = EqualGridPartition(dim, pointNum);
+
+
+
+    let Dungeon = rooms.map((Gd) => {
+
+        Gd.x = Math.floor(Gd.x);
+        Gd.y = Math.floor(Gd.y);
+        Gd.width = _.random(.4 * Gd.width, .8 * Gd.width, false);
+        Gd.height = _.random(.4 * Gd.height, .8 * Gd.height, false);
+        return Gd;
+
+    })
+
+    return Dungeon;
+
+}
+export {PopulateDungeon, PopulateDungeon2};
