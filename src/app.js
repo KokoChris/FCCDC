@@ -1,17 +1,18 @@
-import Path from './node_modules/paths-js/path.js';
+import Path from '../node_modules/paths-js/path.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
 const width = 1000,
     height = 500;
-let NaNarray = [];
+let NaNarray = []
+    ;
 function dist(x, y) {
     return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 }
 function moveAway(beta, alpha) {
 
-    const dify = beta.y - alpha.y - alpha.height
-    const difx = beta.x - alpha.x - alpha.width
+    const dify = beta.y - alpha.y - alpha.height;
+    const difx = beta.x - alpha.x - alpha.width;
     let newBeta = beta;
     let sign = {};
     if ((dify <= 0) && (difx <= 0)) {
@@ -29,9 +30,9 @@ function moveAway(beta, alpha) {
 
         }
     if (isNaN(newBeta.x))
-        NaNarray.push(newBeta)
+        NaNarray.push(newBeta);
     else if (isNaN(newBeta.y))
-        NaNarray.push(newBeta)
+        NaNarray.push(newBeta);
 
     return newBeta;
 }
@@ -57,7 +58,7 @@ function GenerateDungeon(size, width, height) {
         }
     })).sort((alpha, beta) => {
         return dist(alpha.x, alpha.y) - dist(beta.x, beta.y)
-    })
+    });
     //console.log(dungeon);
     for (let j = 1; j < dungeon.length; j++)
         for (let i = 0; i < j; i++)
