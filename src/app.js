@@ -1,131 +1,70 @@
+// 'use strict';
 import Path from '../node_modules/paths-js/path.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
-const width = 1000,
-    height = 500;
-let NaNarray = []
-    ;
-function dist(x, y) {
-    return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-}
-function moveAway(beta, alpha) {
+import {PopulateDungeon, PopulateDungeon2} from './helper.js';
+import {TriangulateDungeon, GetDungeonPaths} from './helper1.js'
 
-    const dify = beta.y - alpha.y - alpha.height;
-    const difx = beta.x - alpha.x - alpha.width;
-    let newBeta = beta;
-    let sign = {};
-    if ((dify <= 0) && (difx <= 0)) {
-        sign.x = ((beta.x < 0) || (alpha.x < 0))
-            ? (-1)
-            : 1;
-        sign.y = ((beta.y < 0) || (alpha.y < 0))
-            ? (-1)
-            : 1;
 
-        if (difx > dify)
-            newBeta.x = sign.x * ((newBeta.x * sign.x) - difx + _.random(10, 30));
-        else
-            newBeta.y = sign.y * ((newBeta.y * sign.y) - dify + _.random(10, 30));
-
-        }
-    if (isNaN(newBeta.x))
-        NaNarray.push(newBeta);
-    else if (isNaN(newBeta.y))
-        NaNarray.push(newBeta);
-
-    return newBeta;
-}
-
-function GenerateDungeon(size, width, height) {
-
-    const minDim = {
-        x: width / (15 * 3),
-        y: height / (15 * 3)
-    };
-    const maxDim = {
-        x: width / 5,
-        y: height / 5
-    };
-    let IsDisjoint = false;
-
-    let dungeon = (_.times(size, (a) => {
-        return {
-            x: (_.random(width) - width / 2),
-            y: (_.random(height) - height / 2),
-            width: Math.floor(_.random(minDim.x, maxDim.x, true)),
-            height: Math.floor(_.random(minDim.y, maxDim.y, true))
-        }
-    })).sort((alpha, beta) => {
-        return dist(alpha.x, alpha.y) - dist(beta.x, beta.y)
-    });
-    //console.log(dungeon);
-    for (let j = 1; j < dungeon.length; j++)
-        for (let i = 0; i < j; i++)
-            dungeon[j] = (moveAway(dungeon[j], dungeon[i]));
-console.log(NaNarray);
-    return dungeon;
-
+const grid = {
+    width: 1500,
+    height: 800
 };
 
-function DrawRoom(room) {
-    let  {x, y, width, height} = room;
- 
+function RandomChoose(arr, sel) {
+    let rndArr = [];
 
+    if ((sel > arr.length))
+        console.log("error")
+    else
+        for (let i = 0; i < 10; i++)
+            rndArr = _.concat(rndArr, arr.splice(_.random(0, arr.length - 1), 1));
+return rndArr;
+
+}
+
+const rooms = PopulateDungeon(2000, 200, 800, 1000, 200, 400);
+
+function DrawRoom(room) {
+
+    let {x, y, width, height} = room;
     return Path().moveto(x, y).hlineto(x + width).vlineto(y + height).hlineto(x).closepath();
 
 }
 
+let dungeon = RandomChoose(rooms, 10)
+
+let DrawnDungeon = dungeon.map(x => DrawRoom(x));
+
+let tmp = (PopulateDungeon2(2000, 1000, 6, 3))
+
+let RoomArray = RandomChoose(tmp, 10);
+
+let secondDungeon = RoomArray.map(alpha => DrawRoom(alpha));
+
+let pathsArray = GetDungeonPaths(RoomArray);
+
+let paths = pathsArray.map(arr => Path().moveto(arr[0][0], arr[0][1]).lineto(arr[1][0], arr[1][1]))
+
 class Hello extends React.Component {
     render() {
-        let dungeon = GenerateDungeon(300, 2000, 1000);
-        let rooms = dungeon.map(x => DrawRoom(x));
 
         return (
-            <svg width={width} height={height} viewBox={"-1000 -500 2000 1000"} preserveAspectRatio={"none"} style={{
-                background: "white"
+            <svg width={grid.width} height={grid.height} viewBox={"0 0 2000 1000"} preserveAspectRatio={"none"} style={{
+                background: "#FFF8C6"
             }}>
-                {rooms.map(x => <g>
+
+                {secondDungeon.map((x, index) => <g key={"room No: " + index}>
+                    <path d={x.print()} fill="none" stroke="blue"/>
+                </g>)}
+                {paths.map((x, index) => <g key={"path: " + index}>
                     <path d={x.print()} fill="none" stroke="blue"/>
                 </g>)}
             </svg>
         )
     }
 };
-
-/*
-function GenerateRoom(center, dim, exits) {
-    const {width, height} = dim;
-    const {cx, cy} = center;
-    let exitArr = []
-
-    let GenExits = () => switch (_.random(0, 3)) {
-        case 0:
-            return {
-                x: cx,
-                y: cy - _.random(0.1, height / 2)
-            };
-        case 1:
-            return {
-                x: cx + _.random(0.1, width / 2),
-                y: cy
-            }
-        case 2:
-            return {
-                x: cx,
-                y: cy + _.random(0.1, height / 2)
-            };
-        case 3:
-            return {
-                x: cx - _.random(0.1, width / 2),
-                y: cy
-            }
-
-    }
-    return (_.times(arrayLength, _.constant(null))).map(x => GenExits());
-
-}
-*/
 
 ReactDOM.render(
     <Hello/>, document.getElementById('App'));
