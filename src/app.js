@@ -36,12 +36,12 @@ let RoomArray = RandomChoose(tmp, 10);
 
 let dungeon = RoomArray.map(alpha => DrawRoom(alpha));
 
-let pathsArray = GetDungeonPaths(RoomArray, true);
-console.log(pathsArray);
+let pathsArray = GetDungeonPaths(RoomArray, false);
+//console.log(pathsArray);
 
 let centerList = TriangulateDungeon(RoomArray, false);
 
-console.log("centerlist",centerList);
+//console.log("centerlist",centerList);
 
 let triangles = centerList.map(arr => Path().moveto(arr[0][0], arr[0][1])
                                             .lineto(arr[1][0], arr[1][1])
