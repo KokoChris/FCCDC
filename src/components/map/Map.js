@@ -1,7 +1,6 @@
 // 'use strict';
-import Path from '../node_modules/paths-js/path.js';
+import Path from '../../../node_modules/paths-js/path.js';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import _ from 'lodash';
 import {Populatedungeon, PopulateDungeon2} from './helper.js';
 import {TriangulateDungeon, GetDungeonPaths} from './helper1.js'
@@ -53,7 +52,7 @@ let triangles = centerList.map(arr => Path().moveto(arr[0][0], arr[0][1])
 
 let paths = pathsArray.map(arr => Path().moveto(arr[0][0], arr[0][1]).lineto(arr[1][0], arr[1][1]))
 
-class Hello extends React.Component {
+export default class Map extends React.Component {
     render() {
 
         return (
@@ -72,5 +71,3 @@ class Hello extends React.Component {
     }
 };
 
-ReactDOM.render(
-    <Hello/>, document.getElementById('App'));
