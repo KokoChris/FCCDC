@@ -130,56 +130,54 @@ function GetDungeonPaths(dungeon, withDoors = false) {
         }
 
         for (let i = 0; i < dungeon.length; i++) {
-            skata = LineRoomIntersaction(line,dungeon[i]);
+            skata = LineRoomIntersaction(line, dungeon[i]);
             if (skata > 1)
                 notIntersect = false;
-            console.log("skata", skata);
 
         }
         return notIntersect;
 
-    })
+    });
 
 
 
-    //console.log("edges", edges);
-    //    console.log("verticies", verticies);
-    //    console.log("delaunay", delaunay);
 
-    console.log('TrimEdges?:', TrimedEdges);
-
-
-    return (kruskal(verticies, edges, dist)).map(alpha => [verticies[alpha[0]], verticies[alpha[1]]]);
+    return (kruskal(verticies, TrimedEdges, dist)).map(alpha => [verticies[alpha[0]], verticies[alpha[1]]]);
 
 }
 
 function CheckLineIntersection(lineA, lineB) {
 
-    const {
-        x1,
-        y1,
-        x1,
-        y2
-    } = lineA;
-    const {
-        z1,
-        w1,
-        z2,
-        w2
-    } = lineB;
 
-    console.log('lineA', lineA);
-    console.log('lineB', lineB);
-    let orinentation1 = ((y2 - y1) * (z1 - x2) - (w1 - y2) * (x2 - x1) < 0) ? 'counterclockwise' : "clockwise";
-    let orinentation2 = ((y2 - y1) * (z2 - x2) - (w2 - y2) * (x2 - x1) < 0) ? 'counterclockwise' : "clockwise";
+    const
+        x1 = lineA.x1,
 
-    let orinentation3 = ((w2 - w1) * (x1 - z1) - (y1 - w2) * (z2 - z1) < 0) ? 'counterclockwise' : "clockwise";
-    let orinentation4 = ((w2 - w1) * (x2 - z2) - (y2 - w2) * (z2 - z1) < 0) ? 'counterclockwise' : "clockwise";
+        y1 = lineA.y1,
 
-    console.log(orinentation1,orinentation2,orinentation3,orinentation4);
+        x2 = lineA.x2,
+
+        y2 = lineA.y2;
 
 
-    return ((orinentation1 != orinentation2) || (orinentation3 != orinentation4));
+
+    const z1 = lineB.x1,
+
+        w1 = lineB.y1,
+
+        z2 = lineB.x2,
+
+        w2 = lineB.y2;
+
+
+    let orientation1 = ((y2 - y1) * (z1 - x2) - (w1 - y2) * (x2 - x1) > 0);
+    let orientation2 = ((y2 - y1) * (z2 - x2) - (w2 - y2) * (x2 - x1) > 0);
+
+    let orientation3 = ((w2 - w1) * (x1 - z2) - (y1 - w2) * (z2 - z1) > 0);
+    let orientation4 = ((w2 - w1) * (x2 - z2) - (y2 - w2) * (z2 - z1) > 0);
+
+
+
+    return ((orientation1 != orientation2) && (orientation3 != orientation4));
 
 }
 
@@ -190,39 +188,12 @@ function LineRoomIntersaction(line, room) {
     for (let i = 0; i < 4; i++)
         if (CheckLineIntersection(line, sideList[i]))
             counter++;
+
     return counter;
 
 }
 
 
-/*
-function TrimEdges(edges, verticies, room) {
-    const upperLeft = [room.x, room.y],
-        lowerLeft[ = [room.x, room.y + room.height],
-            upperRight = [room.x + room.width, room.y + room.height],
-            lowerRight = [room.x, room.y + room.height];
-
-
-
-            let TrimedGraph = edges.filter(edge => {
-                    const x1 = verticies[edge[0][0]]
-                    const y1 = verticies[edge[0][1]]
-                    const x2 = verticies[edge[1][0]]
-                    const y2 = verticies[edge[0][1]]
-                    for (let i = 0; i < Edges.length; i++) {
-                        if ((x1 < lowerLeft[0]) & (x2 < lowerRight[0]))
-
-
-
-
-
-                    }
-
-                }
-
-            )
-
-        }*/
 export {
     TriangulateDungeon,
     GetDungeonPaths
