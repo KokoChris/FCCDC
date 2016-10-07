@@ -12,12 +12,13 @@ export default class ManageCharacter extends Component {
 
     }
     handleKeyPress (ev) {
-        console.log(ev);
+        ev.preventDefault();
+        console.log(ev.key);
     }
 
     render() {
         return (
-             <div onClick={this.handleKeyPress}> Hey </div>
+             <div onKeyDown={this.handleKeyPress} tabIndex="1">  Madafucker </div>
         )
     }
 }
