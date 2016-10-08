@@ -18,20 +18,36 @@ const Room = (dimensions) => {
 
     let tiles = [];
     let key = 0;
-    for ( let i = 0; i <= columns; i++) {
-        for (let j = 0; j <= rows; j++) {
-
-            let tile = <Tile key={key}
-                             x={i * TILE_SIZE}
-                             y={j * TILE_SIZE}
-                             width={TILE_SIZE}
-                             height={TILE_SIZE}
-                             fill={'red'}
-                             stroke={'black'}
-                             strokeWidth={0.5} />;
+    for ( let row = 0; row < rows; row ++) {
+        for (let column = 0; column < columns; column++) {
+            let tile;
+            if(key != 10) {
+                 tile = <Tile key={key}
+                                 x={column * TILE_SIZE}
+                                 y={row * TILE_SIZE}
+                                 width={TILE_SIZE}
+                                 height={TILE_SIZE}
+                                 fill={'red' }
+                                 stroke={'black'}
+                                 strokeWidth={0.5}/>;
+            } else {
+                 tile = <Tile
+                                 onKeyDown={()=>console.log('hey')}
+                                 className="character"
+                                 key={key}
+                                 x={column * TILE_SIZE}
+                                 y={row * TILE_SIZE}
+                                 width={TILE_SIZE}
+                                 height={TILE_SIZE}
+                                 fill={'green' }
+                                 stroke={'black'}
+                                 strokeWidth={0.5}/>;
+            }
             tiles.push(tile);
+
             key++;
         }
+
     }
 
     return(

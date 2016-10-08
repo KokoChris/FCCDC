@@ -1,1 +1,1 @@
-export const KEYPRESS = 'KEYPRESS';
+export const KEYPRESS = 'KEYPRESS'
