@@ -1,6 +1,13 @@
 import React, {PropTypes} from 'react';
 import Tile from './tile';
 
+/**
+ *
+ * @param dimensions are the height and width of the board
+ * @returns an svg board with multiple rect elements grouped under a g tag
+ *
+ */
+
 const Room = (dimensions) => {
 
     let  {height,width} = dimensions;
@@ -10,10 +17,11 @@ const Room = (dimensions) => {
     const rows =  height / TILE_SIZE;
 
     let tiles = [];
-
+    let key = 0;
     for ( let i = 0; i <= columns; i++) {
         for (let j = 0; j <= rows; j++) {
-            let tile = <Tile
+
+            let tile = <Tile key={key}
                              x={i * TILE_SIZE}
                              y={j * TILE_SIZE}
                              width={TILE_SIZE}
@@ -22,6 +30,7 @@ const Room = (dimensions) => {
                              stroke={'black'}
                              strokeWidth={0.5} />;
             tiles.push(tile);
+            key++;
         }
     }
 
@@ -29,7 +38,6 @@ const Room = (dimensions) => {
         <svg {...dimensions} >
             <g>
                 {tiles}
-
             </g>
         </svg>
     )
