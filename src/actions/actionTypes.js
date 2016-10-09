@@ -1,1 +1,1 @@
-export const KEYPRESS = 'KEYPRESS'
+export const CHARACTER_MOVE = 'CHARACTER_MOVE';

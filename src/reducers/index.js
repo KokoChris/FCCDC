@@ -1,10 +1,7 @@
 import {combineReducers} from 'redux';
-
-
-
-
+import characterReducer from './characterReducer';
 const rootReducer = combineReducers({
-   test: () => { return {koko:'koko'}}
+   characterReducer
 });
 
 

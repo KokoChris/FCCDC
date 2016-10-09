@@ -9,7 +9,7 @@ import React from 'react';
 
 const Tile = (characteristics) => {
     return (
-            <rect {...characteristics} tabIndex="1">
+            <rect {...characteristics} >
             </rect>
     )
 

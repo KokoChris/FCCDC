@@ -1,65 +1,81 @@
-import React, {PropTypes} from 'react';
+import React, {PropTypes,Component} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as characterActions from '../../actions/characterActions';
+
 import Tile from './tile';
+import Character from '../character/Character';
 
-/**
- *
- * @param dimensions are the height and width of the board
- * @returns an svg board with multiple rect elements grouped under a g tag
- *
- */
 
-const Room = (dimensions) => {
 
-    let  {height,width} = dimensions;
-    const TILE_SIZE = 20; // Ill use that for deciding how many tiles we ll have on a given svg height, for now I assume that we ll always have 640 * 480 so 20 evens out perfectly
+class Room extends Component  {
 
-    const columns = width / TILE_SIZE;
-    const rows =  height / TILE_SIZE;
+    constructor(props) {
 
-    let tiles = [];
-    let key = 0;
-    for ( let row = 0; row < rows; row ++) {
-        for (let column = 0; column < columns; column++) {
-            let tile;
-            if(key != 10) {
-                 tile = <Tile key={key}
-                                 x={column * TILE_SIZE}
-                                 y={row * TILE_SIZE}
-                                 width={TILE_SIZE}
-                                 height={TILE_SIZE}
-                                 fill={'red' }
-                                 stroke={'black'}
-                                 strokeWidth={0.5}/>;
-            } else {
-                 tile = <Tile
-                                 onKeyDown={()=>console.log('hey')}
-                                 className="character"
-                                 key={key}
-                                 x={column * TILE_SIZE}
-                                 y={row * TILE_SIZE}
-                                 width={TILE_SIZE}
-                                 height={TILE_SIZE}
-                                 fill={'green' }
-                                 stroke={'black'}
-                                 strokeWidth={0.5}/>;
-            }
-            tiles.push(tile);
-
-            key++;
-        }
-
+        super(props);
+        this.props = props;
+        this.constructGrid = this.constructGrid.bind(this);
+        this.handleKeyDown = this.handleKeyDown.bind(this);
     }
 
-    return(
-        <svg {...dimensions} >
-            <g>
-                {tiles}
-            </g>
-        </svg>
-    )
+    constructGrid() {
+
+        let  { height, width} = this.props.dimensions;
+        const {TILE_SIZE} = this.props;
+        const columns = width / TILE_SIZE;
+        const rows =  height / TILE_SIZE;
+
+        let tiles = [];
+        let key = 0;
+        for ( let row = 0; row < rows; row ++) {
+            for (let column = 0; column < columns; column++) {
+                let tile;
+
+                tile = <Tile        key={key}
+                                    x={column * TILE_SIZE}
+                                    y={row * TILE_SIZE}
+                                    width={TILE_SIZE}
+                                    height={TILE_SIZE}
+                                    fill={'red' }
+                                    stroke={'black'}
+                                    strokeWidth={0.5}/>;
+
+                tiles.push(tile);
+
+                key++;
+            }
+
+        }
+        return tiles;
+    }
+    handleKeyDown(ev) {
+        ev.preventDefault();
+        let code = /Arrow/;
+        return code.test(ev.key) ? this.props.actions.characterMove(ev.key) : false;
+    }
+
+    render() {
+        return(
+            <svg {...this.props.dimensions} onKeyDown={this.handleKeyDown} tabIndex="1">
+                <g>
+                    {this.constructGrid()}
+                    <Character characteristics={{x:'20',y:'40',width:'20',height:'20',fill:'green'}}/>
+                </g>
+
+            </svg>
+        )
+    }
+
 };
+function mapStateToProps(state) {
+    return state
+}
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators( characterActions,dispatch)
+    }
+}
 
 
 
-
-export default Room;
+export default connect(mapStateToProps,mapDispatchToProps)(Room);
