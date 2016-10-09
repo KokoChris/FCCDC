@@ -11,11 +11,14 @@ import Character from '../character/Character';
 class Room extends Component  {
 
     constructor(props) {
-
         super(props);
+
         this.props = props;
         this.constructGrid = this.constructGrid.bind(this);
+        this.handleKeyUp = this.handleKeyUp.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
+
+        this.renderCharacter = this.renderCharacter.bind(this);
     }
 
     constructGrid() {
@@ -48,18 +51,26 @@ class Room extends Component  {
         }
         return tiles;
     }
-    handleKeyDown(ev) {
+    renderCharacter(){
+        return <Character characteristics={{x:this.props.characterReducer.x, y:this.props.characterReducer.y,width:'20',height:'20',fill:'green'}}/>
+
+    }
+    handleKeyUp(ev) {
         ev.preventDefault();
         let code = /Arrow/;
         return code.test(ev.key) ? this.props.actions.characterMove(ev.key) : false;
     }
+    handleKeyDown(ev){
+        ev.preventDefault();
+        return;
+    }
 
     render() {
         return(
-            <svg {...this.props.dimensions} onKeyDown={this.handleKeyDown} tabIndex="1">
+            <svg {...this.props.dimensions} onKeyDown={this.handleKeyDown} onKeyUp={this.handleKeyUp} tabIndex="1">
                 <g>
                     {this.constructGrid()}
-                    <Character characteristics={{x:'20',y:'40',width:'20',height:'20',fill:'green'}}/>
+                    {this.renderCharacter()}
                 </g>
 
             </svg>
@@ -68,6 +79,7 @@ class Room extends Component  {
 
 };
 function mapStateToProps(state) {
+
     return state
 }
 function mapDispatchToProps(dispatch) {

@@ -1,3 +1,3 @@
 export default {
-    characterPosition:{x:40,y:40}
+    characterPosition:{x:100,y:100}
 }
