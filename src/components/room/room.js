@@ -12,12 +12,10 @@ class Room extends Component  {
 
     constructor(props) {
         super(props);
-
         this.props = props;
         this.constructGrid = this.constructGrid.bind(this);
         this.handleKeyUp = this.handleKeyUp.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
-
         this.renderCharacter = this.renderCharacter.bind(this);
     }
 

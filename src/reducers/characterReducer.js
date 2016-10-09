@@ -10,19 +10,19 @@ export default function characterReducer (state = initialState.characterPosition
             let newPosition = Object.assign({},state);
             if (action.movement === 'ArrowUp') {
                 newPosition.y -= 20;
-                return newPosition;
+                return newPosition.y >= 0 ? newPosition : state;
             }
             if (action.movement === "ArrowDown") {
                 newPosition.y += 20;
-                return newPosition;
+                return newPosition.y <= 460 ? newPosition : state;
             }
             if (action.movement ==="ArrowRight") {
                 newPosition.x += 20;
-                return newPosition;
+                return newPosition.x <= 620 ? newPosition : state;
             }
             if (action.movement ==="ArrowLeft") {
                 newPosition.x -= 20;
-                return newPosition;
+                return newPosition.x  >= 0 ? newPosition : state;
             }
 
 
