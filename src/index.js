@@ -13,5 +13,5 @@ import Room from './components/room/room';
 
 ReactDOM.render(
     <Provider store={store}>
-        <Room dimensions={{width:'640',height:'480'}} TILE_SIZE= {'20'}/>
+        <Room dimensions={{width:'640',height:'480'}}/>
     </Provider>, document.getElementById('App'));
