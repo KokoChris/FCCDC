@@ -5,5 +5,5 @@ export function roomlayout (layout) {
 }
 
 export function fogOfWar (fog) {
-    return{return: types.GET_FOG, fog}
+    return{type: types.GET_FOG, fog}
 }

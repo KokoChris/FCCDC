@@ -2,6 +2,7 @@ import React, {PropTypes,Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as characterActions from '../../actions/characterActions';
+import * as roomActions from '../../actions/roomActions';
 
 import Tile from './tile';
 import Character from '../character/Character';
@@ -13,8 +14,8 @@ class Room extends Component  {
 
     constructor(props) {
         super(props);
-        console.log(props)
         this.props = props;
+        console.log(this.props)
         this.constructGrid = this.constructGrid.bind(this);
         this.handleKeyUp = this.handleKeyUp.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -28,12 +29,12 @@ class Room extends Component  {
 
     }
     constructFog() {
-        return this.props.roomReducer.fog.map((tile,i)=> {
+        return this.props.characterReducer.fog.map((tile,i)=> {
             return <Tile key={i} {...tile} />
         })
     }
     renderCharacter(){
-        return <Character characteristics={{x:this.props.characterReducer.x, y:this.props.characterReducer.y,width:'20',height:'20',fill:'green'}}/>
+        return <Character characteristics={{x:this.props.characterReducer.CP.x, y:this.props.characterReducer.CP.y,width:'20',height:'20',fill:'green'}}/>
 
     }
     renderGoblin(){
@@ -43,7 +44,8 @@ class Room extends Component  {
     handleKeyUp(ev) {
         ev.preventDefault();
         let code = /Arrow/;
-        return code.test(ev.key) ? this.props.actions.characterMove(ev.key) : false;
+        code.test(ev.key) ? this.props.actions.characterMove(ev.key) : false;
+        this.props.actions.fogOfWar();
     }
     handleKeyDown(ev){
         ev.preventDefault();
@@ -71,7 +73,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators( characterActions,dispatch)
+        actions: bindActionCreators(Object.assign({},characterActions,roomActions),dispatch)
     }
 }
 
