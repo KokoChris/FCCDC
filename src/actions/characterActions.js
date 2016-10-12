@@ -4,8 +4,6 @@ export function characterMove (move) {
 
     return {type: types.CHARACTER_MOVE , move }
 }
-
-
 /**
  *
  * @param key  the key which was pressed (UP,DOWN,RIGHT,LEFT)
@@ -19,7 +17,6 @@ export function handleCharacterMove({key,CP,enemy,boundaries}) {
 
     let proposedPosition = Object.assign({},CP);
     let move;
-
     if (key === 'ArrowUp' ) {
         proposedPosition.y -= 20;
 
@@ -29,20 +26,20 @@ export function handleCharacterMove({key,CP,enemy,boundaries}) {
     }
     if (key === 'ArrowDown') {
         proposedPosition.y += 20;
-        if(proposedPosition.y !== enemy.y || proposedPosition !== enemy.x) {
+        if(proposedPosition.y !== enemy.y || proposedPosition.x !== enemy.x) {
             proposedPosition.y <= boundaries.y ? move = proposedPosition : move = CP;
         }
 
     }
     if (key === 'ArrowRight') {
         proposedPosition.x += 20;
-        if(proposedPosition.x !== enemy.y || proposedPosition !== enemy.x) {
+        if(proposedPosition.y !== enemy.y || proposedPosition.x !== enemy.x) {
             proposedPosition.x <= boundaries.x ? move = proposedPosition : move = CP;
         }
     }
     if(key === 'ArrowLeft') {
         proposedPosition.x -= 20;
-        if(proposedPosition.x !== enemy.y || proposedPosition !== enemy.x) {
+        if(proposedPosition.y !== enemy.y || proposedPosition.x !== enemy.x) {
             proposedPosition.x >= 0 ? move = proposedPosition : move = CP;
         }
     }

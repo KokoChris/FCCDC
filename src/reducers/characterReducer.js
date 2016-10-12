@@ -25,7 +25,42 @@ export default function characterReducer (state = initialState, action) {
 
     switch(action.type) {
         case types.CHARACTER_MOVE:
-
+            // let newPosition = Object.assign({},state.CP);
+            //
+            // if (action.movement === 'ArrowUp' ) {
+            //     newPosition.y -= 20;
+            //
+            //     if (newPosition.y !== state.enemy.y || newPosition.x !== state.enemy.x) {
+            //
+            //         return newPosition.y >= 0  ? Object.assign({}, state, {CP: newPosition}) : state;
+            //     }
+            //     return state;
+            // }
+            // if (action.movement === "ArrowDown") {
+            //     newPosition.y += 20;
+            //     if (newPosition.y !== state.enemy.y || newPosition.x !== state.enemy.x) {
+            //
+            //         return newPosition.y <= 460 ? Object.assign({}, state, {CP: newPosition}) : state;
+            //     }
+            //     return state;
+            //
+            // }
+            // if (action.movement === "ArrowRight") {
+            //     newPosition.x += 20;
+            //     if (newPosition.y !== state.enemy.y || newPosition.x !== state.enemy.x) {
+            //         return newPosition.x <= 620 ? Object.assign({}, state, {CP: newPosition}) : state;
+            //     }
+            //     return state;
+            // }
+            // if (action.movement === "ArrowLeft") {
+            //
+            //     newPosition.x -= 20;
+            //     if (newPosition.y !== state.enemy.y || newPosition.x !== state.enemy.x) {
+            //
+            //         return newPosition.x >= 0 ? Object.assign({}, state, {CP: newPosition}) : state;
+            //     }
+            //     return state;
+            // }
 
             return Object.assign({},state,{CP:action.move});
 
