@@ -45,7 +45,13 @@ class Room extends Component  {
     handleKeyUp(ev) {
         ev.preventDefault();
         let code = /Arrow/;
-        code.test(ev.key) ? this.props.actions.characterMove(ev.key) : false;
+        let {actions} = this.props;
+        let {CP,enemy,boundaries} = this.props.characterReducer;
+        let key = ev.key;
+        let args = Object.assign({},{CP,enemy,boundaries,key});
+        code.test(key) ? actions.handleCharacterMove(args) : false;
+
+        // code.test(ev.key) ? this.props.actions.characterMove(ev.key) : false;
         setTimeout(()=>{ this.props.actions.fogOfWar();}, 50);
     }
     handleKeyDown(ev){
