@@ -39,15 +39,13 @@ class Room extends Component  {
 
     }
     renderGoblin(){
-         return <Goblin characteristics={{x:this.props.characterReducer.enemyPosition.x, y:this.props.characterReducer.enemyPosition.y, width:'20',height:'20',fill:'yellow'}}/>
+         return <Goblin characteristics={{x:this.props.characterReducer.enemy.x, y:this.props.characterReducer.enemy.y, width:'20',height:'20',fill:'yellow'}}/>
 
     }
     handleKeyUp(ev) {
         ev.preventDefault();
         let code = /Arrow/;
         code.test(ev.key) ? this.props.actions.characterMove(ev.key) : false;
-
-
         setTimeout(()=>{ this.props.actions.fogOfWar();}, 50);
     }
     handleKeyDown(ev){
@@ -71,7 +69,6 @@ class Room extends Component  {
 
 };
 function mapStateToProps(state) {
-    console.log(state)
     return state
 }
 function mapDispatchToProps(dispatch) {

@@ -40,10 +40,15 @@ function generateInitialFog(CP){
     });
 }
 
+let enemies = new Set();
+enemies.add(JSON.stringify({x:140,y:100}));
+enemies.add(JSON.stringify({x:160,y:100}));
+
 export default {
     CP:{x:100,y:100},
     roomState: generateInitialRoomSetup(640,480,20),
     fog: generateInitialFog({x:100,y:100}),
-    enemyPosition: {x:140 ,y:100},
-    boundaries:{x:640,y:480}
+    enemy: {x:140 ,y:100,health:100,isWalkable:false},
+    boundaries:{x:640,y:480},
+    enemies
 }
