@@ -39,14 +39,16 @@ class Room extends Component  {
 
     }
     renderGoblin(){
-        // return <Goblin characteristics={{x:this.props.characterReducer.enemy.x, y:this.props.character.reducer.enemy.y, width:'20',height:'20',fill:'yellow'}}/>
+         return <Goblin characteristics={{x:this.props.characterReducer.enemyPosition.x, y:this.props.characterReducer.enemyPosition.y, width:'20',height:'20',fill:'yellow'}}/>
 
     }
     handleKeyUp(ev) {
         ev.preventDefault();
         let code = /Arrow/;
         code.test(ev.key) ? this.props.actions.characterMove(ev.key) : false;
-        this.props.actions.fogOfWar();
+
+
+        setTimeout(()=>{ this.props.actions.fogOfWar();}, 50);
     }
     handleKeyDown(ev){
         ev.preventDefault();
@@ -59,6 +61,7 @@ class Room extends Component  {
                 <g>
                     {this.constructGrid()}
                     {this.renderCharacter()}
+                    {this.renderGoblin()}
                     {this.constructFog()}
                 </g>
 
@@ -68,7 +71,7 @@ class Room extends Component  {
 
 };
 function mapStateToProps(state) {
-    console.log(state);
+    console.log(state)
     return state
 }
 function mapDispatchToProps(dispatch) {
@@ -76,7 +79,5 @@ function mapDispatchToProps(dispatch) {
         actions: bindActionCreators(Object.assign({},characterActions,roomActions),dispatch)
     }
 }
-
-
 
 export default connect(mapStateToProps,mapDispatchToProps)(Room);
