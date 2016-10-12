@@ -15,15 +15,16 @@ class Room extends Component  {
     constructor(props) {
         super(props);
         this.props = props;
-        console.log(this.props)
         this.constructGrid = this.constructGrid.bind(this);
         this.handleKeyUp = this.handleKeyUp.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.renderCharacter = this.renderCharacter.bind(this);
+        this.renderGoblin = this.renderGoblin.bind(this)
     }
 
     constructGrid() {
-        return this.props.roomReducer.room.map((tile,i) => {
+
+        return this.props.characterReducer.roomState.map((tile,i) => {
             return <Tile key={i}  {...tile}/>
         });
 
@@ -38,7 +39,7 @@ class Room extends Component  {
 
     }
     renderGoblin(){
-        return <Goblin characteristics={{x:80, y:240, width:'20',height:'20',fill:'yellow'}}/>
+        // return <Goblin characteristics={{x:this.props.characterReducer.enemy.x, y:this.props.character.reducer.enemy.y, width:'20',height:'20',fill:'yellow'}}/>
 
     }
     handleKeyUp(ev) {
@@ -58,7 +59,6 @@ class Room extends Component  {
                 <g>
                     {this.constructGrid()}
                     {this.renderCharacter()}
-                    <Goblin characteristics={{x:80, y:240, width:'20',height:'20',fill:'yellow'}}/>
                     {this.constructFog()}
                 </g>
 
@@ -68,7 +68,7 @@ class Room extends Component  {
 
 };
 function mapStateToProps(state) {
-
+    console.log(state);
     return state
 }
 function mapDispatchToProps(dispatch) {

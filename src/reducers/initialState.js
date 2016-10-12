@@ -6,7 +6,6 @@ function generateInitialRoomSetup(width,height,TILE_SIZE) {
     for ( let row = 0; row < rows; row ++) {
         for (let column = 0; column < columns; column++) {
             let tile;
-
             tile = {
                 x: column * TILE_SIZE,
                 y: row * TILE_SIZE,
@@ -16,15 +15,12 @@ function generateInitialRoomSetup(width,height,TILE_SIZE) {
                 stroke: 'black',
                 strokeWidth: 0.5
             };
-
             tiles.push(tile);
-
         }
 
     }
     return tiles;
 }
-
 function generateInitialFog(CP){
     let templateForFog = Object.assign([],generateInitialRoomSetup(640,480,20));
 
@@ -42,15 +38,12 @@ function generateInitialFog(CP){
         return tile;
 
     });
-
-
 }
 
-
-
-
 export default {
-    characterPosition:{x:100,y:100},
+    CP:{x:100,y:100},
     roomState: generateInitialRoomSetup(640,480,20),
-    fog: generateInitialFog({x:100,y:100})
+    fog: generateInitialFog({x:100,y:100}),
+    enemyPosition: {x:140 ,y:100},
+    boundaries:{x:640,y:480}
 }

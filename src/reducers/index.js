@@ -3,8 +3,7 @@ import characterReducer from './characterReducer';
 import roomReducer from './roomReducer';
 
 const rootReducer = combineReducers({
-   characterReducer,
-   roomReducer
+   characterReducer
 });
 
 
