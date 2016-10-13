@@ -38,7 +38,8 @@ export default function characterReducer (state = initialState, action) {
              return  Object.assign({} , state, {fog:generateFog(CP,oldFog)});
 
 
-
+        case types.PROPOSE_POSITION:
+            console.log(action)
         default:
 
             return state;

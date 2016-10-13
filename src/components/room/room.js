@@ -53,7 +53,14 @@ class Room extends Component  {
         let {enemy,boundaries,enemies,character} = this.props.characterReducer;
         let key = ev.key;
         let args = Object.assign({},{enemy,boundaries,key,enemies,character});
+        // decideNextMove
+        // if next move is allowed then move
+        // if it is allowed and the reason is colleptible then collect
+        // if it is not allowed and the reason is out of bounds do nothing
+        // if it is not allowed and the reason is enemy then attack
+        console.log(actions.handleCharacterMove(args));
         code.test(key) ? actions.handleCharacterMove(args) : false;
+
         setTimeout(()=>{ this.props.actions.fogOfWar();}, 50);
     }
     handleKeyDown(ev){

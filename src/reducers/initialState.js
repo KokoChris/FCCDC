@@ -17,7 +17,6 @@ function generateInitialRoomSetup(width,height,TILE_SIZE) {
             };
             tiles.push(tile);
         }
-
     }
     return tiles;
 }
@@ -40,14 +39,14 @@ function generateInitialFog(CP){
     });
 }
 
-let enemies = [{position:{x:140,y:100},stats:{attack:5,health:50}},{position:{x:140,y:140},stats:{attack:5,health:50}}];
+let enemies = [{position:{x:140,y:100},stats:{attack:5,health:50},isEnemy:true},{position:{x:140,y:140},stats:{attack:5,health:50},isEnemy:false}];
 
 export default {
-    CP:{x:100,y:100,health:100,attack:7},
+
     roomState: generateInitialRoomSetup(640,480,20),
     fog: generateInitialFog({x:100,y:100}),
-    enemy: {x:140 ,y:100,health:100,isWalkable:false},
     boundaries:{x:640,y:480},
     enemies,
-    character: {position: {x:100,y:100}, stats:{attack:10,health:100}}
+    character: {position: {x:100,y:100}, stats:{attack:10,health:100}},
+    nextMove:{isAllowed:false, position:{x:100,y:100}, reason: null}
 }
