@@ -13,6 +13,7 @@ import Goblin from '../enemies/goblin';
 class Room extends Component  {
 
     constructor(props) {
+
         super(props);
         this.props = props;
         this.constructGrid = this.constructGrid.bind(this);
@@ -40,7 +41,6 @@ class Room extends Component  {
     }
     renderGoblin(){
          return <Goblin characteristics={{x:this.props.characterReducer.enemy.x, y:this.props.characterReducer.enemy.y, width:'20',height:'20',fill:'yellow'}}/>
-
     }
     handleKeyUp(ev) {
         ev.preventDefault();
@@ -50,8 +50,6 @@ class Room extends Component  {
         let key = ev.key;
         let args = Object.assign({},{CP,enemy,boundaries,key});
         code.test(key) ? actions.handleCharacterMove(args) : false;
-
-        // code.test(ev.key) ? this.props.actions.characterMove(ev.key) : false;
         setTimeout(()=>{ this.props.actions.fogOfWar();}, 50);
     }
     handleKeyDown(ev){
