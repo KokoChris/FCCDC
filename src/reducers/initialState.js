@@ -40,7 +40,7 @@ function generateInitialFog(CP){
     });
 }
 
-let enemies = [{position:{x:140,y:100},stats:{attack:5,health:50}},{position:{x:140,y:100},stats:{attack:5,health:50}}];
+let enemies = [{position:{x:140,y:100},stats:{attack:5,health:50}},{position:{x:140,y:140},stats:{attack:5,health:50}}];
 
 export default {
     CP:{x:100,y:100,health:100,attack:7},
@@ -48,5 +48,6 @@ export default {
     fog: generateInitialFog({x:100,y:100}),
     enemy: {x:140 ,y:100,health:100,isWalkable:false},
     boundaries:{x:640,y:480},
-    enemies
+    enemies,
+    character: {position: {x:100,y:100}, stats:{attack:10,health:100}}
 }

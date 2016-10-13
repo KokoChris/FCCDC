@@ -7,44 +7,60 @@ export function characterMove (move) {
 /**
  *
  * @param key  the key which was pressed (UP,DOWN,RIGHT,LEFT)
- * @param CP the current character position
+ * @param character.position the current character position
  * @param enemies a list of the enemies
  * @param boundaries the current room boundaries
  * @returns the characterMove action creator
  */
 
-export function handleCharacterMove({key,CP,enemy,boundaries}) {
+export function handleCharacterMove({key,enemy,boundaries,enemies,character}) {
 
-    let proposedPosition = Object.assign({},CP);
+    let proposedPosition = Object.assign({},character.position);
     let move;
+
     if (key === 'ArrowUp' ) {
         proposedPosition.y -= 20;
 
-        if (proposedPosition.y !== enemy.y || proposedPosition.x !== enemy.x) {
-            proposedPosition.y >= 0  ?  move = proposedPosition : move = CP;
+        let  occupants = [...enemies].filter(enemy => {
+            return JSON.stringify(proposedPosition) == JSON.stringify(enemy.position);
+        });
+        if ( occupants.length == 0) {
+            proposedPosition.y >= 0  ?  move = proposedPosition : move = character.position;
         }
     }
     if (key === 'ArrowDown') {
         proposedPosition.y += 20;
-        if(proposedPosition.y !== enemy.y || proposedPosition.x !== enemy.x) {
-            proposedPosition.y <= boundaries.y ? move = proposedPosition : move = CP;
+        let  occupants = [...enemies].filter(enemy => {
+            return JSON.stringify(proposedPosition) == JSON.stringify(enemy.position);
+        });
+
+        if( occupants.length == 0) {
+            proposedPosition.y <= boundaries.y ? move = proposedPosition : move = character.position;
         }
 
     }
     if (key === 'ArrowRight') {
         proposedPosition.x += 20;
-        if(proposedPosition.y !== enemy.y || proposedPosition.x !== enemy.x) {
-            proposedPosition.x <= boundaries.x ? move = proposedPosition : move = CP;
+        let  occupants = [...enemies].filter(enemy => {
+            return JSON.stringify(proposedPosition) == JSON.stringify(enemy.position);
+        });
+
+        if(occupants == 0) {
+            proposedPosition.x <= boundaries.x ? move = proposedPosition : move = character.position;
         }
     }
     if(key === 'ArrowLeft') {
         proposedPosition.x -= 20;
-        if(proposedPosition.y !== enemy.y || proposedPosition.x !== enemy.x) {
-            proposedPosition.x >= 0 ? move = proposedPosition : move = CP;
+
+        let  occupants = [...enemies].filter(enemy => {
+            return JSON.stringify(proposedPosition) == JSON.stringify(enemy.position);
+        });
+        if(occupants == 0) {
+            proposedPosition.x >= 0 ? move = proposedPosition : move = character.position;
         }
     }
 
-    move = move || CP; //just making sure that nobody uses that without pre-validation for only arrow keys
+    move = move || character.position; //just making sure that nobody uses that without pre-validation for only arrow keys
     return dispatch => {
         return dispatch(characterMove(move));
     }

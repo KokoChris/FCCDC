@@ -20,7 +20,7 @@ class Room extends Component  {
         this.handleKeyUp = this.handleKeyUp.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.renderCharacter = this.renderCharacter.bind(this);
-        this.renderGoblin = this.renderGoblin.bind(this)
+        this.renderEnemies = this.renderEnemies.bind(this)
     }
 
     constructGrid() {
@@ -36,19 +36,23 @@ class Room extends Component  {
         })
     }
     renderCharacter(){
-        return <Character characteristics={{x:this.props.characterReducer.CP.x, y:this.props.characterReducer.CP.y,width:'20',height:'20',fill:'green'}}/>
+        let {x,y} = this.props.characterReducer.character.position;
+        return <Character characteristics={{x, y,width:'20',height:'20',fill:'green'}}/>
 
     }
-    renderGoblin(){
-         return <Goblin characteristics={{x:this.props.characterReducer.enemy.x, y:this.props.characterReducer.enemy.y, width:'20',height:'20',fill:'yellow'}}/>
+    renderEnemies(){
+         return this.props.characterReducer.enemies.map((enemy,i) => {
+             let {x,y} = enemy.position;
+            return <Goblin key={i} characteristics={{x,y, width:'20',height:'20',fill:'yellow'}}/>
+         });
     }
     handleKeyUp(ev) {
         ev.preventDefault();
         let code = /Arrow/;
         let {actions} = this.props;
-        let {CP,enemy,boundaries} = this.props.characterReducer;
+        let {enemy,boundaries,enemies,character} = this.props.characterReducer;
         let key = ev.key;
-        let args = Object.assign({},{CP,enemy,boundaries,key});
+        let args = Object.assign({},{enemy,boundaries,key,enemies,character});
         code.test(key) ? actions.handleCharacterMove(args) : false;
         setTimeout(()=>{ this.props.actions.fogOfWar();}, 50);
     }
@@ -63,7 +67,7 @@ class Room extends Component  {
                 <g>
                     {this.constructGrid()}
                     {this.renderCharacter()}
-                    {this.renderGoblin()}
+                    {this.renderEnemies()}
                     {this.constructFog()}
                 </g>
 
