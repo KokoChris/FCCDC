@@ -1,16 +1,14 @@
 import React ,{PropTypes}from 'react';
 
-const Goblin = (props) => {
+const Element = (props) => {
 
     let { characteristics } = props;
-
     return (
         <rect {...characteristics}></rect>
     );
 };
 
-
-Goblin.propTypes = {
+Element.propTypes = {
     characteristics: PropTypes.object.isRequired
 };
-export default Goblin;
+export default Element;

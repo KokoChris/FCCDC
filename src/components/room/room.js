@@ -6,7 +6,7 @@ import * as roomActions from '../../actions/roomActions';
 
 import Tile from './tile';
 import Character from '../character/Character';
-import Goblin from '../enemies/goblin';
+import Element from '../enemies/element';
 
 
 
@@ -20,7 +20,7 @@ class Room extends Component  {
         this.handleKeyUp = this.handleKeyUp.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.renderCharacter = this.renderCharacter.bind(this);
-        this.renderEnemies = this.renderEnemies.bind(this)
+        this.renderElements = this.renderElements.bind(this)
     }
 
     constructGrid() {
@@ -40,39 +40,38 @@ class Room extends Component  {
         return <Character characteristics={{x, y,width:'20',height:'20',fill:'green'}}/>
 
     }
-    renderEnemies(){
-         return this.props.characterReducer.enemies.map((enemy,i) => {
-             let {x,y} = enemy.position;
-            return <Goblin key={i} characteristics={{x,y, width:'20',height:'20',fill:'yellow'}}/>
+    renderElements(){
+         return this.props.characterReducer.mapElements.map((element,i) => {
+             let {x,y} = element.position;
+             if(element.isEnemy) {
+                 return <Element key={i} characteristics={{x,y, width:'20',height:'20',fill:'yellow'}}/>
+
+             } else {
+                 return <Element key={i} characteristics={{x:x+5, y:y+5, width: '10', height: '10', fill: 'blue'}}/>
+             }
          });
     }
     handleKeyUp(ev) {
         ev.preventDefault();
         let {actions} = this.props;
         let {nextMove} = this.props.characterReducer;
-
-
         // let args = Object.assign({},{enemy,boundaries,key,enemies,character});
-
         // if next move is allowed then move
         // if it is allowed and the reason is colleptible then collect
         // if it is not allowed and the reason is out of bounds do nothing
         // if it is not allowed and the reason is enemy then attack
         let nextPosition = Object.assign({}, nextMove.position);
         actions.characterMove(nextPosition);
-
         setTimeout(()=>{ this.props.actions.fogOfWar();}, 50);
     }
     handleKeyDown(ev){
         ev.preventDefault();
         let code = /Arrow/;
         let {actions} = this.props;
-        let {enemy,boundaries,enemies,character} = this.props.characterReducer;
+        let {enemy,boundaries,mapElements,character} = this.props.characterReducer;
         let key = ev.key;
-        let args = Object.assign({},{enemy,boundaries,key,enemies,character});
+        let args = Object.assign({},{enemy,boundaries,key,mapElements,character});
         return code.test(key )?  actions.decideNextMove(args) : false;
-
-
     }
 
     render() {
@@ -81,9 +80,8 @@ class Room extends Component  {
                 <g>
                     {this.constructGrid()}
                     {this.renderCharacter()}
-                    {this.renderEnemies()}
+                    {this.renderElements()}
                     {this.renderCharacter()}
-
                     {this.constructFog()}
                 </g>
 

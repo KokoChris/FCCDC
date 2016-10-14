@@ -39,14 +39,14 @@ function generateInitialFog(CP){
     });
 }
 
-let enemies = [{position:{x:140,y:100},stats:{attack:5,health:50},isEnemy:true},{position:{x:140,y:140},stats:{attack:5,health:50},isEnemy:false}];
+let mapElements = [{position:{x:140,y:100},stats:{attack:5,health:50},isEnemy:true},{position:{x:140,y:140},stats:{attack:5,health:50},isEnemy:false}];
 
 export default {
 
     roomState: generateInitialRoomSetup(640,480,20),
     fog: generateInitialFog({x:100,y:100}),
     boundaries:{x:640,y:480},
-    enemies,
+    mapElements,
     character: {position: {x:100,y:100}, stats:{attack:10,health:100}},
     nextMove:{isAllowed:false, position:{x:100,y:100}, reason: null}
 }
