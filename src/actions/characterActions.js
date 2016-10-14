@@ -8,6 +8,10 @@ export function proposeNextPosition (position) {
     return {type:types.PROPOSE_POSITION, position}
 }
 
+export function updateAfterPickup (character,elements) {
+    return {type:types.UPDATE_PICKUP, character,elements }
+}
+
 /**
  *
  * @param key the key that was pressed, should be  (UP,DOWN,LEFT,RIGHT)
@@ -29,7 +33,7 @@ export function decideNextMove ({key,boundaries,mapElements,character}) {
 
         });
         if ( proposedPosition.y < 0) {
-            nextMove = { isAllowed:false, position: characterPosition, reason:'outOfBounds'}
+            nextMove = { isAllowed:false, position: characterPosition, reason:null}
          }
         if ( occupants.length == 0 && proposedPosition.y >= 0) {
             nextMove = { isAllowed:true, position: proposedPosition, reason:null}
@@ -49,7 +53,7 @@ export function decideNextMove ({key,boundaries,mapElements,character}) {
                 return JSON.stringify(proposedPosition) == JSON.stringify(element.position);
             });
             if (proposedPosition.y >= boundaries.y) {
-                nextMove = {isAllowed: false, position: characterPosition, reason: 'outOfBounds'}
+                nextMove = {isAllowed: false, position: characterPosition, reason: null}
             }
             if (occupants.length == 0 && proposedPosition.y <= boundaries.y) {
                 nextMove = {isAllowed: true, position: proposedPosition, reason: null}
@@ -67,7 +71,7 @@ export function decideNextMove ({key,boundaries,mapElements,character}) {
                 return JSON.stringify(proposedPosition) == JSON.stringify(element.position);
             });
             if (proposedPosition.x >= boundaries.x) {
-                nextMove = {isAllowed: false, position: characterPosition, reason: 'outOfBounds'}
+                nextMove = {isAllowed: false, position: characterPosition, reason: null}
             }
             if (occupants.length == 0 && proposedPosition.x <= boundaries.x) {
                 nextMove = {isAllowed: true, position: proposedPosition, reason: null}
@@ -87,7 +91,7 @@ export function decideNextMove ({key,boundaries,mapElements,character}) {
                 return JSON.stringify(proposedPosition) == JSON.stringify(element.position);
             });
             if (proposedPosition.x <= 0) {
-                nextMove = {isAllowed: false, position: characterPosition, reason: 'outOfBounds'}
+                nextMove = {isAllowed: false, position: characterPosition, reason: null}
             }
             if (occupants.length == 0 && proposedPosition.x >= 0) {
                 nextMove = {isAllowed: true, position: proposedPosition, reason: null}
@@ -106,5 +110,45 @@ export function decideNextMove ({key,boundaries,mapElements,character}) {
     return dispatch => {
         return dispatch(proposeNextPosition(nextMove));
     }
+
+}
+
+
+export function handlePickup({character,mapElements,nextMove}) {
+     let char = Object.assign({}, character);
+     char.position.x = nextMove.position.x; //workaround to some misunderstandings I have about redux sequence of multiple actions just making sure that position is correct
+     char.position.y = nextMove.position.y;
+
+
+     let unCollected = mapElements.filter((elem) =>  {
+       return JSON.stringify(elem.position)  !== JSON.stringify(nextMove.position)
+     });
+     let collected  = mapElements.filter((elem) => {
+        return JSON.stringify(elem.position)  == JSON.stringify(nextMove.position)
+
+     });
+
+    if (collected[0].health) {
+        char.increaseHealth(collected[0].health);
+        console.log(char.getCurrentHealth())
+    }
+    if(collected[0].attack) {
+        char.increaseAttack(collected[0].attack);
+        console.log(char.getAttack());
+    }
+
+    return dispatch => {
+        return dispatch(updateAfterPickup(char,unCollected))
+
+    }
+
+
+
+
+
+}
+
+
+export function  handleAttack() {
 
 }

@@ -42,30 +42,50 @@ class Room extends Component  {
     }
     renderElements(){
          return this.props.characterReducer.mapElements.map((element,i) => {
-             let {x,y} = element.position;
+             let {x,y,} = element.position;
+             let {fill} = element;
              if(element.isEnemy) {
-                 return <Element key={i} characteristics={{x,y, width:'20',height:'20',fill:'yellow'}}/>
+                 return <Element key={i} characteristics={{x,y, width:'20',height:'20',fill}}/>
 
              } else {
-                 return <Element key={i} characteristics={{x:x+5, y:y+5, width: '10', height: '10', fill: 'blue'}}/>
+                 return <Element key={i} characteristics={{x:x+5, y:y+5, width: '10', height: '10',fill}}/>
              }
          });
     }
+
     handleKeyUp(ev) {
         ev.preventDefault();
         let {actions} = this.props;
-        let {nextMove} = this.props.characterReducer;
-        // let args = Object.assign({},{enemy,boundaries,key,enemies,character});
-        // if next move is allowed then move
-        // if it is allowed and the reason is colleptible then collect
-        // if it is not allowed and the reason is out of bounds do nothing
-        // if it is not allowed and the reason is enemy then attack
+        let {nextMove,character,mapElements} = this.props.characterReducer;
+
+        let args = Object.assign({},{mapElements,character,nextMove});
+
         let nextPosition = Object.assign({}, nextMove.position);
-        actions.characterMove(nextPosition);
-        setTimeout(()=>{ this.props.actions.fogOfWar();}, 50);
+
+        if (nextMove.isAllowed && nextMove.reason){
+            actions.characterMove(nextPosition);
+            actions.handlePickup(args)
+
+        }
+        if (nextMove.isAllowed && !nextMove.reason) {
+            //just move it is an empty space
+            actions.characterMove(nextPosition);
+        }
+        if (!nextMove.isAllowed && nextMove.reason) {
+            //actions.handleAttack
+            actions.characterMove(nextPosition);
+
+        }
+        if (!nextMove.isAllowed && !nextMove.reason) {
+           return;
+
+        }
+
+            setTimeout(()=>{ this.props.actions.fogOfWar();}, 50);
     }
     handleKeyDown(ev){
         ev.preventDefault();
+
         let code = /Arrow/;
         let {actions} = this.props;
         let {enemy,boundaries,mapElements,character} = this.props.characterReducer;

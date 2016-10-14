@@ -16,7 +16,10 @@ export function Hero ({attack,health,level,x,y}) {
         getLevel: () => this.level,
         getAttack: () => this.attack,
         getMaxHealth: () => this.maxHealth,
-        increaseHealth: (health) =>  currentHealth + health,
+        increaseHealth: (health) =>  {
+          return  this.currentHealth + health > this.maxHealth ? this.currentHealth = this.maxHealth :  this.currentHealth += health * this.getLevel();
+        },
+        increaseAttack: (attack) => this.attack += attack,
         decreaseHealth: (health) =>   currentHealth - health,
         increaseXP: (xp) => this.xp + xp
 

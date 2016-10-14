@@ -26,20 +26,20 @@ export default function characterReducer (state = initialState, action) {
     switch(action.type) {
         case types.CHARACTER_MOVE:
 
-
             let character = Object.assign({},state.character);
             character.position = action.move;
             return Object.assign({},state,{character});
 
         case types.GET_FOG:
-
              let oldFog =  [...state.fog];
              let CP = Object.assign({},state.character.position);
              return  Object.assign({} , state, {fog:generateFog(CP,oldFog)});
 
-
         case types.PROPOSE_POSITION:
              return Object.assign({}, state, {nextMove: action.position});
+        case types.UPDATE_PICKUP:
+            console.log(action)
+             return Object.assign({},state, {mapElements:action.elements,character:action.character});
         default:
 
             return state;
