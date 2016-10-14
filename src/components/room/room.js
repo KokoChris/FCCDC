@@ -48,24 +48,30 @@ class Room extends Component  {
     }
     handleKeyUp(ev) {
         ev.preventDefault();
-        let code = /Arrow/;
         let {actions} = this.props;
-        let {enemy,boundaries,enemies,character} = this.props.characterReducer;
-        let key = ev.key;
-        let args = Object.assign({},{enemy,boundaries,key,enemies,character});
-        // decideNextMove
+        let {nextMove} = this.props.characterReducer;
+        // let args = Object.assign({},{enemy,boundaries,key,enemies,character});
+
         // if next move is allowed then move
         // if it is allowed and the reason is colleptible then collect
         // if it is not allowed and the reason is out of bounds do nothing
         // if it is not allowed and the reason is enemy then attack
-        console.log(actions.handleCharacterMove(args));
-        code.test(key) ? actions.handleCharacterMove(args) : false;
+        let nextPosition = Object.assign({}, nextMove.position);
+        actions.characterMove(nextPosition);
+        // code.test(key) ? actions.handleCharacterMove(args) : false;
 
         setTimeout(()=>{ this.props.actions.fogOfWar();}, 50);
     }
     handleKeyDown(ev){
         ev.preventDefault();
-        return;
+        let code = /Arrow/;
+        let {actions} = this.props;
+        let {enemy,boundaries,enemies,character} = this.props.characterReducer;
+        let key = ev.key;
+        let args = Object.assign({},{enemy,boundaries,key,enemies,character});
+        return code.test(key )?  actions.decideNextMove(args) : false;
+
+
     }
 
     render() {

@@ -39,7 +39,7 @@ export default function characterReducer (state = initialState, action) {
 
 
         case types.PROPOSE_POSITION:
-            console.log(action)
+             return Object.assign({}, state, {nextMove: action.position});
         default:
 
             return state;
