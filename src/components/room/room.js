@@ -50,6 +50,8 @@ class Room extends Component  {
         ev.preventDefault();
         let {actions} = this.props;
         let {nextMove} = this.props.characterReducer;
+
+
         // let args = Object.assign({},{enemy,boundaries,key,enemies,character});
 
         // if next move is allowed then move
@@ -58,7 +60,6 @@ class Room extends Component  {
         // if it is not allowed and the reason is enemy then attack
         let nextPosition = Object.assign({}, nextMove.position);
         actions.characterMove(nextPosition);
-        // code.test(key) ? actions.handleCharacterMove(args) : false;
 
         setTimeout(()=>{ this.props.actions.fogOfWar();}, 50);
     }
@@ -81,6 +82,8 @@ class Room extends Component  {
                     {this.constructGrid()}
                     {this.renderCharacter()}
                     {this.renderEnemies()}
+                    {this.renderCharacter()}
+
                     {this.constructFog()}
                 </g>
 

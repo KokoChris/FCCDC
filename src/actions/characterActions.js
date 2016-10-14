@@ -1,7 +1,6 @@
 import * as types from './actionTypes';
 
 export function characterMove (move) {
-
     return {type: types.CHARACTER_MOVE , move }
 }
 
@@ -11,11 +10,11 @@ export function proposeNextPosition (position) {
 
 /**
  *
- * @param key
- * @param boundaries
+ * @param key the key that was pressed, should be  (UP,DOWN,LEFT,RIGHT)
+ * @param boundaries the current room boundaries
  * @param enemies
- * @param character
- * @returns {function(*)}
+ * @param character to use the current character position
+ * @returns because of redux thunk we are allowed to  return a function which then returns our function creator
  */
 
 export function decideNextMove ({key,boundaries,enemies,character}) {
@@ -44,8 +43,7 @@ export function decideNextMove ({key,boundaries,enemies,character}) {
 
 
     }
-
-        if (key === 'ArrowDown') {
+    if (key === 'ArrowDown') {
             proposedPosition.y += 20;
             let occupants = [...enemies].filter(enemy => {
                 return JSON.stringify(proposedPosition) == JSON.stringify(enemy.position);
@@ -63,8 +61,7 @@ export function decideNextMove ({key,boundaries,enemies,character}) {
                 nextMove = {isAllowed: true, position: proposedPosition, reason: 'collectible'}
             }
         }
-
-        if (key === 'ArrowRight') {
+    if (key === 'ArrowRight') {
             proposedPosition.x += 20;
             let occupants = [...enemies].filter(enemy => {
                 return JSON.stringify(proposedPosition) == JSON.stringify(enemy.position);
@@ -84,7 +81,7 @@ export function decideNextMove ({key,boundaries,enemies,character}) {
             }
 
         }
-        if (key === 'ArrowLeft') {
+    if (key === 'ArrowLeft') {
             proposedPosition.x -= 20;
             let occupants = [...enemies].filter(enemy => {
                 return JSON.stringify(proposedPosition) == JSON.stringify(enemy.position);
@@ -104,74 +101,10 @@ export function decideNextMove ({key,boundaries,enemies,character}) {
             }
         }
 
-        nextMove = nextMove || { isAllowed:false, position:characterPosition ,reason:null}; //just making sure that nobody uses that without pre-validation for only arrow keys
-
+    nextMove = nextMove || { isAllowed:false, position:characterPosition ,reason:null}; //just making sure that nobody uses that without pre-validation for only arrow keys
 
     return dispatch => {
         return dispatch(proposeNextPosition(nextMove));
     }
 
-}
-/**
- *
- * @param key  the key which was passed (UP,DOWN,RIGHT,LEFT are the only valid options)
- * @param character.position the current character position
- * @param enemies a list of the enemies
- * @param boundaries the current room boundaries
- * @returns the characterMove action creator
- */
-
-export function handleCharacterMove({nextMove}) {
-
-    let proposedPosition = Object.assign({},character.position);
-    let move;
-
-    if (key === 'ArrowUp' ) {
-        proposedPosition.y -= 20;
-        let  occupants = [...enemies].filter(enemy => {
-
-            return JSON.stringify(proposedPosition) == JSON.stringify(enemy.position);
-
-        });
-        if ( occupants.length == 0) {
-            proposedPosition.y >= 0  ?  move = proposedPosition : move = character.position;
-        }
-    }
-    if (key === 'ArrowDown') {
-        proposedPosition.y += 20;
-
-        let  occupants = [...enemies].filter(enemy => {
-            return JSON.stringify(proposedPosition) == JSON.stringify(enemy.position);
-        });
-
-
-        if( occupants.length == 0) {
-            proposedPosition.y <= boundaries.y ? move = proposedPosition : move = character.position;
-        }
-
-    }
-    if (key === 'ArrowRight') {
-        proposedPosition.x += 20;
-        let  occupants = [...enemies].filter(enemy => {
-            return JSON.stringify(proposedPosition) == JSON.stringify(enemy.position);
-        });
-
-        if(occupants.length == 0) {
-            proposedPosition.x <= boundaries.x ? move = proposedPosition : move = character.position;
-        }
-    }
-    if(key === 'ArrowLeft') {
-        proposedPosition.x -= 20;
-        let  occupants = [...enemies].filter(enemy => {
-            return JSON.stringify(proposedPosition) == JSON.stringify(enemy.position);
-        });
-        if(occupants.length == 0) {
-            proposedPosition.x >= 0 ? move = proposedPosition : move = character.position;
-        }
-    }
-
-    move = move || character.position; //just making sure that nobody uses that without pre-validation for only arrow keys
-    return dispatch => {
-        return dispatch(characterMove(move));
-    }
 }
