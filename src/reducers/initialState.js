@@ -1,3 +1,5 @@
+import  * as models  from '../models';
+
 function generateInitialRoomSetup(width,height,TILE_SIZE) {
 
     const columns = width / TILE_SIZE;
@@ -40,13 +42,15 @@ function generateInitialFog(CP){
 }
 
 let mapElements = [{position:{x:140,y:100},stats:{attack:5,health:50},isEnemy:true},{position:{x:140,y:140},stats:{attack:5,health:50},isEnemy:false}];
-
+let {Hero} = models;
+let character= new Hero({x:100,y:100,attack:5,health:100});
 export default {
 
     roomState: generateInitialRoomSetup(640,480,20),
     fog: generateInitialFog({x:100,y:100}),
     boundaries:{x:640,y:480},
     mapElements,
-    character: {position: {x:100,y:100}, stats:{attack:10,health:100}},
+    character,
     nextMove:{isAllowed:false, position:{x:100,y:100}, reason: null}
+
 }
