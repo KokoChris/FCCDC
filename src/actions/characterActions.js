@@ -1,5 +1,9 @@
 import * as types from './actionTypes';
-
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 export function characterMove (move) {
     return {type: types.CHARACTER_MOVE , move }
 }
@@ -164,7 +168,8 @@ export function  handleAttack({character,mapElements,nextMove}) {
 
     let [ enemy ] = currentEnemy;
 
-    enemy.stats.health -= char.getAttack();
+    enemy.stats.health -= getRandomInt(1,char.getAttack());
+    console.log(enemy.stats.health);
     if(enemy.stats.health <=0) {
         let remainingElements = tempMapElements.filter(elem => {
             return JSON.stringify(elem.position)  !== JSON.stringify(nextMove.attemptedPosition)
@@ -181,7 +186,8 @@ export function  handleAttack({character,mapElements,nextMove}) {
         console.log(char.getLevel())
 
     } else {
-        char.decreaseHealth(enemy.stats.attack);
+        char.decreaseHealth(getRandomInt(1,enemy.stats.attack));
+        console.log(char.getCurrentHealth());
         char.getCurrentHealth() <= 0 ? char = {} : null;
 
     }
