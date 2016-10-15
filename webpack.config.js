@@ -22,6 +22,9 @@ module.exports =  {
     // new webpack.HotModuleReplacementPlugin(),
     // new webpack.NoErrorsPlugin()
   ],
+  resolveLoader: {
+      root: path.join(__dirname, 'node_modules')
+  },
   module: {
     loaders: [
       {test: /\.js$/, include: path.join(__dirname, 'src'), loaders: ['babel-loader']},
