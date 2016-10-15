@@ -8,8 +8,6 @@ import Tile from './tile';
 import Character from '../character/Character';
 import Element from '../enemies/element';
 
-
-
 class Room extends Component  {
 
     constructor(props) {
@@ -52,7 +50,6 @@ class Room extends Component  {
              }
          });
     }
-
     handleKeyUp(ev) {
         ev.preventDefault();
         let {actions} = this.props;
@@ -74,13 +71,15 @@ class Room extends Component  {
         if (!nextMove.isAllowed && nextMove.reason) {
             //actions.handleAttack
             actions.characterMove(nextPosition);
+            actions.handleAttack(args)
+
+
 
         }
         if (!nextMove.isAllowed && !nextMove.reason) {
            return;
 
         }
-
             setTimeout(()=>{ this.props.actions.fogOfWar();}, 50);
     }
     handleKeyDown(ev){

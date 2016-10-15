@@ -51,6 +51,6 @@ export default {
     boundaries:{x:640,y:480},
     mapElements,
     character,
-    nextMove:{isAllowed:false, position:{x:100,y:100}, reason: null}
+    nextMove:{isAllowed:false, position:{x:100,y:100}, attemptedPosition:{x:100,y:100},reason: null}
 
 }

@@ -38,8 +38,9 @@ export default function characterReducer (state = initialState, action) {
         case types.PROPOSE_POSITION:
              return Object.assign({}, state, {nextMove: action.position});
         case types.UPDATE_PICKUP:
-            console.log(action)
              return Object.assign({},state, {mapElements:action.elements,character:action.character});
+        case types.UPDATE_ATTACK:
+            return Object.assign({},state, {mapElements:action.elements,character:action.character});
         default:
 
             return state;

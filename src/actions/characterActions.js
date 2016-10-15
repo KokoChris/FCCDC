@@ -12,6 +12,10 @@ export function updateAfterPickup (character,elements) {
     return {type:types.UPDATE_PICKUP, character,elements }
 }
 
+export function updateAfterAttack(character,elements) {
+    return {type:types.UPDATE_ATTACK, character,elements}
+}
+
 /**
  *
  * @param key the key that was pressed, should be  (UP,DOWN,LEFT,RIGHT)
@@ -39,7 +43,7 @@ export function decideNextMove ({key,boundaries,mapElements,character}) {
             nextMove = { isAllowed:true, position: proposedPosition, reason:null}
         }
         if (occupants.length == 1 && occupants[0].isEnemy) {
-            nextMove =  {isAllowed:false, position: characterPosition , reason:'element'}
+            nextMove =  {isAllowed:false, position: characterPosition ,attemptedPosition:proposedPosition, reason:'element'}
         }
         if (occupants.length == 1 && !occupants[0].isEnemy) {
             nextMove = {isAllowed:true, position: proposedPosition, reason:'collectible'}
@@ -59,7 +63,7 @@ export function decideNextMove ({key,boundaries,mapElements,character}) {
                 nextMove = {isAllowed: true, position: proposedPosition, reason: null}
             }
             if (occupants.length == 1 && occupants[0].isEnemy) {
-                nextMove = {isAllowed: false, position: characterPosition, reason: 'element'}
+                nextMove = {isAllowed: false, position: characterPosition,attemptedPosition:proposedPosition, reason: 'element'}
             }
             if (occupants.length == 1 && !occupants[0].isEnemy) {
                 nextMove = {isAllowed: true, position: proposedPosition, reason: 'collectible'}
@@ -77,7 +81,7 @@ export function decideNextMove ({key,boundaries,mapElements,character}) {
                 nextMove = {isAllowed: true, position: proposedPosition, reason: null}
             }
             if (occupants.length == 1 && occupants[0].isEnemy) {
-                nextMove = {isAllowed: false, position: characterPosition, reason: 'element'}
+                nextMove = {isAllowed: false, position: characterPosition,attemptedPosition:proposedPosition, reason: 'element'}
             }
             if (occupants.length == 1 && !occupants[0].isEnemy) {
                 nextMove = {isAllowed: true, position: proposedPosition, reason: 'collectible'}
@@ -97,7 +101,7 @@ export function decideNextMove ({key,boundaries,mapElements,character}) {
                 nextMove = {isAllowed: true, position: proposedPosition, reason: null}
             }
             if (occupants.length == 1 && occupants[0].isEnemy) {
-                nextMove = {isAllowed: false, position: characterPosition, reason: 'element'}
+                nextMove = {isAllowed: false, position: characterPosition,attemptedPosition:proposedPosition, reason: 'element'}
             }
             if (occupants.length == 1 && !occupants[0].isEnemy) {
                 nextMove = {isAllowed: true, position: proposedPosition, reason: 'collectible'}
@@ -149,6 +153,40 @@ export function handlePickup({character,mapElements,nextMove}) {
 }
 
 
-export function  handleAttack() {
+export function  handleAttack({character,mapElements,nextMove}) {
+    let char = Object.assign({}, character);
+    let tempMapElements = mapElements.map(elem=> {
+         elem = JSON.stringify(elem);
+         return Object.assign({}, JSON.parse(elem))
+    });
+
+    char.position.x = nextMove.position.x; //workaround to some misunderstandings I have about redux sequence of multiple actions just making sure that position is correct
+    char.position.y = nextMove.position.y;
+
+    let currentEnemy = tempMapElements.filter( elem => {
+        return JSON.stringify(elem.position)  == JSON.stringify(nextMove.attemptedPosition)
+    });
+
+
+    let [ enemy ] = currentEnemy;
+
+    enemy.stats.health -= char.getAttack();
+    if(enemy.stats.health <=0) {
+        let remainingElements = tempMapElements.filter(elem => {
+            return JSON.stringify(elem.position)  !== JSON.stringify(nextMove.attemptedPosition)
+
+        });
+        tempMapElements = remainingElements;
+        // char.increaseXP(20);
+        // char.getNeededCurrentXP
+    } else {
+        char.decreaseHealth(enemy.stats.attack);
+
+    }
+
+
+    return dispatch => {
+        return dispatch(updateAfterAttack(char,tempMapElements));
+    }
 
 }
