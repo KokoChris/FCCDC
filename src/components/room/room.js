@@ -69,7 +69,6 @@ class Room extends Component  {
             actions.characterMove(nextPosition);
         }
         if (!nextMove.isAllowed && nextMove.reason) {
-            //actions.handleAttack
             actions.characterMove(nextPosition);
             actions.handleAttack(args)
 

@@ -43,6 +43,8 @@ export default function characterReducer (state = init, action) {
              return Object.assign({},state, {mapElements:action.elements,character:action.character});
         case types.UPDATE_ATTACK:
             return Object.assign({},state, {mapElements:action.elements,character:action.character});
+        case types.CHARACTER_DEATH:
+            return Object.assign({}, initialState());
         default:
 
             return state;

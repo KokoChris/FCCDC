@@ -8,7 +8,6 @@ function getRandomInt(min, max) {
 }
 
 function generateInitialRoomSetup(width,height,TILE_SIZE) {
-
     const columns = width / TILE_SIZE;
     const rows =  height / TILE_SIZE;
     let tiles = [];
@@ -30,7 +29,6 @@ function generateInitialRoomSetup(width,height,TILE_SIZE) {
     return tiles;
 }
 function generateInitialFog(CP){
-    console.log(CP)
     let templateForFog = Object.assign([],generateInitialRoomSetup(640,480,20));
 
     let noFog = [[CP.x,CP.y],[CP.x+20,CP.y+20],[CP.x-20,CP.y-20],[CP.x,CP.y+20],[CP.x,CP.y-20],[CP.x+20,CP.y],[CP.x-20,CP.y],[CP.x-20,CP.y+20],[CP.x+20,CP.y-20],[CP.x-40,CP.y],[CP.x+40,CP.y],[CP.x,CP.y+40],[CP.x,CP.y-40]];
@@ -38,14 +36,12 @@ function generateInitialFog(CP){
         let test = noFog.filter((a) => {
             return a[0] == tile.x && a[1] == tile.y;
         });
-
         if (test.length > 0) {
             tile.fill = 'none';
         } else {
             tile.fill = 'black'
         }
         return tile;
-
     });
 }
 
@@ -77,7 +73,7 @@ function generateElementsAndCharacter () {
 
     let mapElements = elemPositions.map((elem,i)=> {
         let elemPosition = JSON.parse(elem);
-        if (i <= 22) {
+        if (i <= 25) {
             return {
                 position:elemPosition,
                 stats: {
@@ -88,7 +84,7 @@ function generateElementsAndCharacter () {
                 fill:'yellow'
             }
         }
-       if (i> 25 && i <= 32) {
+       if (i > 25 && i <= 35) {
            return {
                position: elemPosition,
                isEnemy:false,
@@ -97,7 +93,7 @@ function generateElementsAndCharacter () {
                fill:'pink'
            }
        }
-       if (i > 32) {
+       if (i > 35) {
            return {
                position: elemPosition,
                isEnemy:false,
@@ -114,12 +110,9 @@ function generateElementsAndCharacter () {
     }
 }
 
-
-
 export default function () {
     let {character, mapElements} = generateElementsAndCharacter();
     let fog = generateInitialFog(character.position);
-
     return {
      roomState: generateInitialRoomSetup(640, 480, 20),
      fog,

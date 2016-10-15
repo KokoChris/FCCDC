@@ -20,6 +20,10 @@ export function updateAfterAttack(character,elements) {
     return {type:types.UPDATE_ATTACK, character,elements}
 }
 
+export function reportCharacterDead() {
+    return {type:types.CHARACTER_DEATH, state:{}}
+}
+
 /**
  *
  * @param key the key that was pressed, should be  (UP,DOWN,LEFT,RIGHT)
@@ -188,7 +192,11 @@ export function  handleAttack({character,mapElements,nextMove}) {
     } else {
         char.decreaseHealth(getRandomInt(1,enemy.stats.attack));
         console.log(char.getCurrentHealth());
-        char.getCurrentHealth() <= 0 ? char = {} : null;
+        if (char.getCurrentHealth() <= 0 ) {
+            return dispatch => {
+                return dispatch(reportCharacterDead());
+            }
+        }
 
     }
 

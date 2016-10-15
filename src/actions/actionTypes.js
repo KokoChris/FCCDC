@@ -4,3 +4,4 @@ export const GET_FOG  = 'GET_FOG';
 export const PROPOSE_POSITION = 'PROPOSE_POSITION';
 export const UPDATE_PICKUP = 'UPDATE_PICKUP';
 export const UPDATE_ATTACK = 'UPDATE_ATTACK';
+export const CHARACTER_DEATH = 'CHARACTER_DEATH';
