@@ -7,12 +7,12 @@
     "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "test": "mocha --reporter spec tools/testSetup.js \"src/**/*.test.js\"",
     "postinstall": "webpack -p",
-    "start" : "node server.js"
-
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.13.4",
     "faster-delaunay": "^1.0.0",
     "kruskal": "0.0.4",
     "lodash": "^4.16.2",
