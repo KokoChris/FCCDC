@@ -16,6 +16,7 @@
     "faster-delaunay": "^1.0.0",
     "kruskal": "0.0.4",
     "lodash": "^4.16.2",
+    "path": "^0.12.7",
     "paths-js": "^0.4.4",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
