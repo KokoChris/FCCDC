@@ -77,7 +77,7 @@ function generateElementsAndCharacter () {
 
     let mapElements = elemPositions.map((elem,i)=> {
         let elemPosition = JSON.parse(elem);
-        if (i <= 25) {
+        if (i <= 22) {
             return {
                 position:elemPosition,
                 stats: {
@@ -88,7 +88,7 @@ function generateElementsAndCharacter () {
                 fill:'yellow'
             }
         }
-       if (i> 25 && i <= 35) {
+       if (i> 25 && i <= 32) {
            return {
                position: elemPosition,
                isEnemy:false,
@@ -97,7 +97,7 @@ function generateElementsAndCharacter () {
                fill:'pink'
            }
        }
-       if (i > 35) {
+       if (i > 32) {
            return {
                position: elemPosition,
                isEnemy:false,
