@@ -9,6 +9,7 @@ export function Hero ({attack,health,level,x,y}) {
     this.x = x;
     this.y = y;
     this.xp = 0;
+    this.neededXp = 100;
 
     return {
         position: {x: this.x, y: this.y},
@@ -21,7 +22,16 @@ export function Hero ({attack,health,level,x,y}) {
         },
         increaseAttack: (attack) =>   this.attack += attack,
         decreaseHealth: (health) =>   this.currentHealth -= health,
-        increaseXP: (xp) => this.xp + xp
+        increaseXP: (xp) => this.xp += xp,
+        getNeededXp: () => this.neededXp,
+        getCurrentXp: () => this.xp,
+        levelUp: () => {
+            this.level += 1;
+            this.attack += 3;
+            this.maxHealth  += 20;
+            this.currentHealth = this.maxHealth;
+            this.xp = 0;
+        }
 
     }
 

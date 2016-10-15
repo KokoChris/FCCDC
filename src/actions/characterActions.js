@@ -48,8 +48,6 @@ export function decideNextMove ({key,boundaries,mapElements,character}) {
         if (occupants.length == 1 && !occupants[0].isEnemy) {
             nextMove = {isAllowed:true, position: proposedPosition, reason:'collectible'}
         }
-
-
     }
     if (key === 'ArrowDown') {
             proposedPosition.y += 20;
@@ -87,7 +85,6 @@ export function decideNextMove ({key,boundaries,mapElements,character}) {
                 nextMove = {isAllowed: true, position: proposedPosition, reason: 'collectible'}
 
             }
-
         }
     if (key === 'ArrowLeft') {
             proposedPosition.x -= 20;
@@ -116,8 +113,6 @@ export function decideNextMove ({key,boundaries,mapElements,character}) {
     }
 
 }
-
-
 export function handlePickup({character,mapElements,nextMove}) {
      let char = Object.assign({}, character);
      char.position.x = nextMove.position.x; //workaround to some misunderstandings I have about redux sequence of multiple actions just making sure that position is correct
@@ -167,7 +162,6 @@ export function  handleAttack({character,mapElements,nextMove}) {
         return JSON.stringify(elem.position)  == JSON.stringify(nextMove.attemptedPosition)
     });
 
-
     let [ enemy ] = currentEnemy;
 
     enemy.stats.health -= char.getAttack();
@@ -177,10 +171,18 @@ export function  handleAttack({character,mapElements,nextMove}) {
 
         });
         tempMapElements = remainingElements;
-        // char.increaseXP(20);
-        // char.getNeededCurrentXP
+        char.increaseXP(40);
+        console.log(char.getNeededXp())
+
+
+        char.getNeededXp() <= char.getCurrentXp()? char.levelUp() : null ;
+        console.log(char.getCurrentXp())
+
+        console.log(char.getLevel())
+
     } else {
         char.decreaseHealth(enemy.stats.attack);
+        char.getCurrentHealth() <= 0 ? char = {} : null;
 
     }
 

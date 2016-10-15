@@ -41,9 +41,16 @@ function generateInitialFog(CP){
     });
 }
 
-let mapElements = [{position:{x:140,y:100},stats:{attack:5,health:50},isEnemy:true,fill:'yellow'},{position:{x:140,y:140},stats:{attack:5,health:50},isEnemy:false,health:20,attack:null,fill:'pink'},{position:{x:140,y:200},stats:{attack:5,health:50},isEnemy:false,health:null,attack:5,fill:'blue'}];
+let mapElements = [
+    {position:{x:180,y:200},stats:{attack:5,health:50},isEnemy:true,fill:'yellow'},
+    {position:{x:160,y:120},stats:{attack:5,health:50},isEnemy:true,fill:'yellow'},
+    {position:{x:140,y:100},stats:{attack:5,health:50},isEnemy:true,fill:'yellow'},
+    {position:{x:140,y:140},stats:{attack:5,health:50},isEnemy:false,health:20,attack:null,fill:'pink'},
+    {position:{x:200,y:140},stats:{attack:5,health:50},isEnemy:false,health:20,attack:null,fill:'pink'},
+    {position:{x:140,y:200},stats:{attack:5,health:50},isEnemy:false,health:null,attack:5,fill:'blue'}
+    ];
 let {Hero} = models;
-let character= new Hero({x:100,y:100,attack:5,health:100});
+let character= new Hero({x:100,y:100,attack:5,health:100,level:1});
 export default {
 
     roomState: generateInitialRoomSetup(640,480,20),
