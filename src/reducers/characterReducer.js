@@ -1,6 +1,9 @@
 import * as types from '../actions/actionTypes';
 import initialState from './initialState';
 
+
+let init = initialState();
+
 function generateFog(CP,oldFog){
 
     let noFog = [[CP.x,CP.y],[CP.x+20,CP.y+20],[CP.x-20,CP.y-20],[CP.x,CP.y+20],[CP.x,CP.y-20],[CP.x+20,CP.y],[CP.x-20,CP.y],[CP.x-20,CP.y+20],[CP.x+20,CP.y-20],[CP.x-40,CP.y],[CP.x+40,CP.y],[CP.x,CP.y+40],[CP.x,CP.y-40]];
@@ -17,11 +20,10 @@ function generateFog(CP,oldFog){
             tile2.fill = 'black'
         }
         return tile2;
-
     });
 }
 
-export default function characterReducer (state = initialState, action) {
+export default function characterReducer (state = init, action) {
 
     switch(action.type) {
         case types.CHARACTER_MOVE:
