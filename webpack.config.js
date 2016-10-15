@@ -11,12 +11,12 @@ module.exports =  {
   ],
   target: 'web',
   output: {
-    path: __dirname + '/dist', // Note: Physical files are only output by the production build task `npm run build`.
+    path: __dirname , // Note: Physical files are only output by the production build task `npm run build`.
     publicPath: '/',
     filename: 'bundle.js'
   },
   devServer: {
-    contentBase: './src'
+    contentBase: './'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
