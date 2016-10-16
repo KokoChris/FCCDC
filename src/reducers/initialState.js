@@ -45,7 +45,6 @@ function generateInitialFog(CP){
     });
 }
 
-
 /**
  * numOfElements how many elements you want in the room
  * @returns {Set} of stringified positions
@@ -114,13 +113,11 @@ function generateElementsAndCharacter () {
            }
        }
     });
-
     return {
         character:new Hero({x:heroPosition.x,y:heroPosition.y,attack:5,health:100,level:1}),
         mapElements
     }
 }
-
 export default function () {
     let {character, mapElements} = generateElementsAndCharacter();
     let fog = generateInitialFog(character.position);
