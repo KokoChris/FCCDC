@@ -122,6 +122,8 @@ class Room extends Component  {
                 <p>Yellow guys are enemies</p>
                 <p>Brown  guys are stronger enemies</p>
                 <p>Have fun!</p>
+                <p><a href="https://github.com/KokoChris/FCCDC">Github</a>
+                </p>
             </div>
         )
     }

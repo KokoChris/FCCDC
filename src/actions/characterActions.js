@@ -154,8 +154,6 @@ export function handlePickup({character,mapElements,nextMove}) {
 
 
 }
-
-
 export function  handleAttack({character,mapElements,nextMove}) {
     let char = Object.assign({}, character);
     let tempMapElements = mapElements.map(elem=> {
@@ -179,14 +177,14 @@ export function  handleAttack({character,mapElements,nextMove}) {
             return JSON.stringify(elem.position)  !== JSON.stringify(nextMove.attemptedPosition)
 
         });
+        if (enemy.isBoss) {
+            return dispatch => {
+                return dispatch(reportCharacterDead());
+            }
+        }
         tempMapElements = remainingElements;
         char.increaseXP(40);
-        console.log(char.getNeededXp())
-
-
         char.getNeededXp() <= char.getCurrentXp()? char.levelUp() : null ;
-        console.log(char.getCurrentXp())
-
         console.log(char.getLevel())
 
     } else {

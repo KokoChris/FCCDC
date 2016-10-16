@@ -68,11 +68,23 @@ function generatePositionsForElements (width,height,TILE_SIZE,numOfElements) {
 function generateElementsAndCharacter () {
     let elemPositions = Array.from(generatePositionsForElements(620,460,20,40));
     let heroPosition = JSON.parse(elemPositions.splice(0,1)[0]);
-    let bossPosition = JSON.parse(elemPositions.splice(0,1)[0]);
 
     let mapElements = elemPositions.map((elem,i)=> {
         let elemPosition = JSON.parse(elem);
-        if (i <= 14) {
+        if (i == 0) {
+            return {
+                position: elemPosition,
+                stats: {
+                    attack: 20,
+                    health: 200
+                },
+                isEnemy:true,
+                isBoss:true,
+                fill:'steelblue'
+            }
+
+        }
+        if (i > 0 && i <= 14) {
             return {
                 position:elemPosition,
                 stats: {
