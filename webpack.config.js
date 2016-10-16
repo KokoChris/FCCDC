@@ -38,7 +38,11 @@ module.exports =  {
         query: {
           presets: ['react', 'es2015', 'stage-1']
         }
-      },
+      },{
+       test:/\.scss$/,
+       exclude:/node_modules/,
+       loader:"style-loader!css-loader!sass-loader"
+      }
     ]
   },
     resolve: {
