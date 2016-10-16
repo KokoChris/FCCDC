@@ -1,4 +1,4 @@
-require("./../style.min.css");
+require("../style.scss");
 import Map from './components/map/Map';
 import ReactDOM from 'react-dom';
 import React from 'react';
