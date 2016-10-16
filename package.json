@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-loader": "^6.2.5",
     "express": "^4.13.4",
     "faster-delaunay": "^1.0.0",
     "kruskal": "0.0.4",
