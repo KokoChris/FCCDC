@@ -7,6 +7,7 @@ import * as roomActions from '../../actions/roomActions';
 import Tile from './tile';
 import Character from '../character/Character';
 import Element from '../enemies/element';
+import StatBox from '../misc/statBox';
 
 class Room extends Component  {
 
@@ -18,9 +19,17 @@ class Room extends Component  {
         this.handleKeyUp = this.handleKeyUp.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.renderCharacter = this.renderCharacter.bind(this);
-        this.renderElements = this.renderElements.bind(this)
+        this.renderElements = this.renderElements.bind(this);
+        this.renderStatBox = this.renderStatBox.bind(this);
     }
+    renderStatBox() {
+        let {character} = this.props.characterReducer;
+        let health = character.getCurrentHealth();
+        let attack = character.getAttack();
+        let level = character.getLevel();
+        return  <StatBox health={health} attack={attack} level={level}/>
 
+    }
     constructGrid() {
 
         return this.props.characterReducer.roomState.map((tile,i) => {
@@ -94,16 +103,20 @@ class Room extends Component  {
 
     render() {
         return(
-            <svg {...this.props.dimensions} onKeyDown={this.handleKeyDown} onKeyUp={this.handleKeyUp} tabIndex="1">
-                <g>
-                    {this.constructGrid()}
-                    {this.renderCharacter()}
-                    {this.renderElements()}
-                    {this.renderCharacter()}
-                    {this.constructFog()}
-                </g>
+            <div>
+                {this.renderStatBox()}
 
-            </svg>
+                <svg {...this.props.dimensions} onKeyDown={this.handleKeyDown} onKeyUp={this.handleKeyUp} tabIndex="1">
+                    <g>
+                        {this.constructGrid()}
+                        {this.renderCharacter()}
+                        {this.renderElements()}
+                        {this.renderCharacter()}
+                        {this.constructFog()}
+                    </g>
+
+                </svg>
+            </div>
         )
     }
 

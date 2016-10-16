@@ -116,7 +116,7 @@ export default function () {
     return {
      roomState: generateInitialRoomSetup(640, 480, 20),
      fog,
-     boundaries: {x: 640, y: 480},
+     boundaries: {x: 620, y: 460},
      mapElements,
      character,
      nextMove: {isAllowed: false, position: {x: 100, y: 100}, attemptedPosition: {x: 100, y: 100}, reason: null}
