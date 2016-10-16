@@ -8,7 +8,6 @@ const StatBox = (props) => {
             <p>Health: {props.health} </p>
             <p>Level:  {props.level}  </p>
             <p>Attack: {props.attack} </p>
-
         </div>
     )
 };

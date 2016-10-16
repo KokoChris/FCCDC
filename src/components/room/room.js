@@ -116,6 +116,12 @@ class Room extends Component  {
                     </g>
 
                 </svg>
+                <p>Kill the boss to win (lightblue guy). Fight him too early and he will destroy you</p>
+                <p>Small blue items are power ups</p>
+                <p>Small red items are potions</p>
+                <p>Yellow guys are enemies</p>
+                <p>Brown  guys are stronger enemies</p>
+                <p>Have fun!</p>
             </div>
         )
     }
